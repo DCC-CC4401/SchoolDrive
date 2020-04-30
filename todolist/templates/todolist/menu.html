@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-light" style="background-color:#e3f2fd;">
+        <a class="navbar-brand" href="#">Todo List</a>
+        <form class="form-inline">
+             {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="btn btn-outline-success">Cerrar sesión </a>
+                {% else %}
+                    <a href="{% url 'register_user' %}" class="btn btn-outline-success">Registrarse</a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-success">Iniciar Sesión</a>
+                {% endif %}
+        </form>
+    </nav>
+    <main>{% block content %}{% endblock %}</main>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</html>
