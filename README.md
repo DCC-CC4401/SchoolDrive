@@ -4,7 +4,7 @@
 ### Step 1
 Clonar el repositorio.
 ### Step 2
-Crear un ambiente virtual:
+Crear un ambiente virtual en la carpeta del repo:
 ```
 python -m venv .venv
 ```
@@ -13,7 +13,7 @@ python -m venv .venv
 Activar el ambiente:
 Windows:
 ```
-. .\name_venv\Scripts\Activate.ps1
+. .\.venv\Scripts\Activate.ps1
 ```
 Linux:
 ```
