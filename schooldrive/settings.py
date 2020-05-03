@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'todolist'
+    'drive'
 ]
 
 MIDDLEWARE = [
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'todoapp.urls'
+ROOT_URLCONF = 'schooldrive.urls'
 
 TEMPLATES = [
     {
@@ -67,7 +67,7 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'todoapp.wsgi.application'
+WSGI_APPLICATION = 'schooldrive.wsgi.application'
 
 
 # Database
@@ -99,7 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'todolist.User'
+AUTH_USER_MODEL = 'drive.User'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from todolist import models
+from drive import models
 
 admin.site.register(models.Category)
 admin.site.register(models.Task)
