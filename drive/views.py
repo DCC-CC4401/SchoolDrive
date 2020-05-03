@@ -65,3 +65,6 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+def view_profile(request):
+    pass
