@@ -28,13 +28,15 @@ def index(request): #the index view
         if 'login' in request.POST: #Log In
             mail = request.POST['mail']
             contraseña = request.POST['contraseña']
+            print('mail:' +mail+'pass: '+contraseña) ## No loguea :c
             usuario = authenticate(request,email=mail,password=contraseña)
             if usuario is not None:
                 login(request, usuario)
                 messages.success(request, 'Te damos la bienvenida ' + usuario.apodo + '!')
                 return HttpResponseRedirect('/')
             else:
-                return HttpResponseRedirect('/register')
+                messages.error(request, 'No hubo match para los datos ingresados.')
+                return HttpResponseRedirect('/')
         else: #Register
             nombre = request.POST['nombre']
             contraseña = request.POST['contraseña']
