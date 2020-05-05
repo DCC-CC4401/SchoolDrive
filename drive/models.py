@@ -20,10 +20,10 @@ class Archivo(models.Model):
 
 class Carpeta(models.Model):
     class Meta:
-        unique_together = ['id', 'correo_usuario']
+        unique_together = ['id', 'usuario']
     nombre = models.CharField(max_length = 250)
     fecha_creacion = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) # a date
-    correo_usuario = models.ForeignKey(User, db_column="email", on_delete=models.CASCADE)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Category(models.Model):
