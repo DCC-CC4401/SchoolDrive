@@ -12,9 +12,17 @@ class User(AbstractUser):
     
 class Archivo(models.Model):
     class Meta:
-        unique_together = ['nombre', 'formato', 'correo_usuario']
+        unique_together = ['nombre', 'formato', 'usuario']
     nombre = models.CharField(max_length = 250)
     formato = models.CharField(max_length = 250)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class Carpeta(models.Model):
+    class Meta:
+        unique_together = ['id', 'correo_usuario']
+    nombre = models.CharField(max_length = 250)
+    fecha_creacion = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) # a date
     correo_usuario = models.ForeignKey(User, db_column="email", on_delete=models.CASCADE)
 
 
