@@ -6,3 +6,4 @@ from drive import models
 admin.site.register(models.Category)
 admin.site.register(models.Task)
 admin.site.register(models.User)
+admin.site.register(models.Archivo)

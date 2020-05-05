@@ -4,7 +4,18 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    apodo=models.CharField(max_length=30)
+    apodo = models.CharField(max_length=30)
+    descripcion = models.TextField(blank = True)
+    fecha_cumpleanhos = models.DateField(null = True)
+    class Meta:
+        unique_together = ['email']
+    
+class Archivo(models.Model):
+    class Meta:
+        unique_together = ['nombre', 'formato', 'usuario_correo']
+    nombre = models.CharField(max_length = 250)
+    formato = models.CharField(max_length = 250)
+    usuario_correo = models.ForeignKey(User, db_column="email", on_delete=models.CASCADE)
 
 
 class Category(models.Model):
