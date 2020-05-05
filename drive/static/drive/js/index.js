@@ -4,6 +4,7 @@ const nombreusuario = document.getElementById('nombre_usuario');
 const nombrespanError = document.getElementById('nombreError');
 const constraseñausuario = document.getElementById('contraseña');
 const constraseñaVerifusuario = document.getElementById('contraseñaVerif');
+const contraseñaspanErrorInput = document.getElementById('contraseñaErrorInput');
 const contraseñaspanError = document.getElementById('contraseñaError');
 const apodousuario = document.getElementById("apodo");
 const apodospanError = document.getElementById("apodoError");
@@ -26,6 +27,14 @@ function nombreError() {
     nombrespanError.style.display = "block";
 };
 
+$(constraseñausuario).change( function (){
+    if (!constraseñausuario.validity.valueMissing){
+        contraseñaspanErrorInput.style.display = "none";
+    } else {
+        contraseñaInputError();
+    }
+})
+
 $(constraseñaVerifusuario).change( function (){
     if ($(constraseñaVerifusuario).val()==$(constraseñausuario).val()){
         constraseñausuario.classList.remove("invalid");
@@ -40,6 +49,12 @@ function contraseñaError() {
     constraseñausuario.classList += " invalid";
     constraseñaVerifusuario.classList += " invalid";
     contraseñaspanError.style.display = "block";
+};
+
+function contraseñaInputError() {
+    constraseñausuario.classList += " invalid";
+    constraseñaVerifusuario.classList += " invalid";
+    contraseñaspanErrorInput.style.display = "block";
 };
 
 
@@ -84,6 +99,10 @@ form.addEventListener('submit', function (event){
     }
     if (apodousuario.validity.valueMissing){
 		apodoError();
+		count++;
+    }
+    if (constraseñausuario.validity.valueMissing){
+		contraseñaInputError();
 		count++;
     }
     if ($(constraseñaVerifusuario).val()!=$(constraseñausuario).val()){
