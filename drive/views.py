@@ -26,9 +26,9 @@ def index(request): #the index view
     if request.method == "POST": #checking if the request method is a POST
         
         if 'login' in request.POST: #Log In
-            username = request.POST['username']
+            mail = request.POST['mail']
             contraseña = request.POST['contraseña']
-            usuario = authenticate(request,username=username,password=contraseña)
+            usuario = authenticate(request,email=mail,password=contraseña)
             if usuario is not None:
                 login(request, usuario)
                 messages.success(request, 'Te damos la bienvenida ' + usuario.apodo + '!')
