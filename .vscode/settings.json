@@ -1,4 +1,4 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.pythonPath": "d:\\Files\\Documents\\CC4401\\test\\.proyectvenv\\Scripts\\python.exe"
+    "python.pythonPath": ".venv\\Scripts\\python.exe"
 }
