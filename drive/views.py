@@ -64,40 +64,6 @@ def index(request): #the index view
         #         todo = Task.objects.get(id=int(todo_id)) #getting todo id
         #         todo.delete() #deleting todo
         #     return render(request, "drive/index.html", {"todos": todos, "categories": categories})
-
-#Called with /register, it is available if the user is not authenticated, and renders
-#   the view where the user can enter the necessary to have an account.
-#   The user can call the url by GET, or can add information and then POST to create an account
-def register_user(request):
-    if request.method == 'GET':
-        return render(request,"drive/register_user.html")
-
-    elif request.method == 'POST':
-        nombre = request.POST['nombre']
-        contraseña = request.POST['contraseña']
-        apodo = request.POST['apodo']
-        mail = request.POST['mail']
-        user = User.objects.create_user(username=nombre, password=contraseña,email=mail,apodo=apodo)
-        messages.success(request, 'Se creó el usuario para ' + user.apodo + '!')
-        return HttpResponseRedirect('/')
-
-#Called with /login, only available if the user is not authenticated
-#   Logins the user and begins to display the interface for aunthenticated users (if the user ir registered)
-#   Has two options depending if the user is giving information or just getting it
-def login_user(request):
-    if request.method == 'GET':
-        return render(request, "drive/login.html")
-    if request.method == 'POST':
-        
-            username = request.POST['username']
-            contraseña = request.POST['contraseña']
-            usuario = authenticate(request,username=username,password=contraseña)
-            if usuario is not None:
-                login(request, usuario)
-                messages.success(request, 'Te damos la bienvenida ' + usuario.apodo + '!')
-                return HttpResponseRedirect('/')
-            else:
-                return HttpResponseRedirect('/register')
         
 #Called with /logout, only available if the user is authenticated
 #   Logouts the authenticated user and shows the screen as if is not registered
