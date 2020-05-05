@@ -26,11 +26,11 @@
                     {% csrf_token %}
                     <div class="form-group mb-2" style="margin-right: 5px;">
                         <label for="email" style="color: aliceblue;font-size: medium;">Email: &nbsp;</label>
-                        <input type="text" class="form-control" id=nombre_usuario name="username" style="size: 20px;" placeholder="email@example.com" required>
+                        <input type="text" class="form-control" id="nombre_usuario_login" name="username" style="size: 20px;" placeholder="email@example.com" required>
                     </div>
                     <div class="form-group mb-2" style="margin-right: 5px;">
                         <label for="contraseña" style="color: aliceblue;font-size: medium;">Password: &nbsp;</label>
-                        <input type="password" class="form-control" id="contraseña" name="contraseña"  placeholder="Password" required>
+                        <input type="password" class="form-control" id="contraseña_login" name="contraseña"  placeholder="Password" required>
                     </div>
                     
                     <button type="submit" type="button" name="login" class="btn btn-outline-light mb-2" id="button_log">Ingresar</button>
@@ -45,6 +45,8 @@
     </nav>
     <main>{% block content %}{% endblock %}</main>
 </body>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'drive/js/index.js' %}"></script>
+
 </html>

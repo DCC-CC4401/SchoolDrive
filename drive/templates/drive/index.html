@@ -25,11 +25,12 @@
                 padding: .5rem .75rem;
                 line-height: 1.25;"> <!-- Rows y cols tienen su documentación en grid-->
                     <h1> Registrarse </h1>
-                    <form method="post" >
+                    <form id="form" method="post" novalidate>
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="nombre_usuario" style="font-size: medium;">Nombre: </label>
                             <input type="text" class="form-control" id=nombre_usuario name="nombre" required>
+                            <span id="nombreError" >Debes ingresar un nombre válido</span>
                         </div>
                         <div class="form-group">
                             <label for="contraseña" style="font-size: medium;">Contraseña: </label>
@@ -38,10 +39,12 @@
                         <div class="form-group" style="font-size: medium;">
                             <label for="apodo">Apodo: </label>
                             <input type="text" class="form-control" id="apodo" name="apodo" required>
+                            <span id="apodoError" >Debes ingresar un apodo válido</span>
                         </div>
                         <div class="form-group">
                             <label for="mail" style="font-size: medium;">Mail: </label>
                             <input type="email" class="form-control" id="mail" name="mail" required>
+                            <span id="mailError" >Debes ingresar un email válido</span>
                         </div>
                         <button type="submit" name="register" class="btn btn-primary">Registrarse</button>
                     </form>
