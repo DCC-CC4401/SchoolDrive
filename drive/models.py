@@ -12,10 +12,10 @@ class User(AbstractUser):
     
 class Archivo(models.Model):
     class Meta:
-        unique_together = ['nombre', 'formato', 'usuario_correo']
+        unique_together = ['nombre', 'formato', 'correo_usuario']
     nombre = models.CharField(max_length = 250)
     formato = models.CharField(max_length = 250)
-    usuario_correo = models.ForeignKey(User, db_column="email", on_delete=models.CASCADE)
+    correo_usuario = models.ForeignKey(User, db_column="email", on_delete=models.CASCADE)
 
 
 class Category(models.Model):
