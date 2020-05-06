@@ -41,7 +41,7 @@ def index(request): #the index view
             if not User.objects.filter(username=mail).exists():
                 user = User.objects.create_user(username=mail, password=contraseña,email=mail,apodo=apodo, 
                 first_name= nombre, last_name=apellido)
-                messages.error(request, 'Se creó el usuario para ' + user.apodo + '!')
+                messages.success(request, 'Se creó el usuario para ' + user.apodo + '!')
             else:
                 messages.error(request, 'Ya existe un usuario con ese email. Intenta iniciando sesión con tu email y contraseña.')
                 return HttpResponseRedirect('/')
