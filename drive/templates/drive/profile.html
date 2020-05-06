@@ -14,16 +14,18 @@
         <!-- Editar Perfil -->
         <div class="col-6">
             <h1> Editar Perfil </h1>
-            <form method="post">
+            <form id="form" method="post" novalidate>
                 {% csrf_token %}
                 <div class="form-group row"> <!-- Fila -->
                     <div class="col">
                         <label for="Nombre">Nombre: </label>
                         <input type="text" class="form-control" id="Nombre" name="Nombre" value="{{ user.first_name }}" required>
+                        <span id="nombreError" >Debes ingresar un nombre válido</span>
                     </div>
                     <div class="col">
                         <label for="Apellido">Apellido: </label>
                         <input type="text" class="form-control" id="Apellido" name="Apellido" value="{{ user.last_name }}" required>
+                        <span id="apellidoError">Debes ingresar tu apellido</span>
                     </div>
                 </div>
                 
@@ -38,10 +40,12 @@
                     <div class="col">
                         <label for="Apodo">Apodo: </label>
                         <input type="text" class="form-control" id="Apodo" name="Apodo" value="{{ user.apodo }}" required>
+                        <span id="apodoError" >Debes ingresar un apodo válido</span>
                     </div>
                     <div class="col">
                         <label for="Nacimiento">Fecha de Nacimiento: </label>
                         <input type="date" class="form-control" id="Nacimiento" name="Nacimiento" value="{{ user.fecha_nacimiento|truncatewords:3 }}" required>
+                        <span id="fechaError" >Debes ingresar una fecha válida</span>
                     </div>
                 </div>
                 
@@ -64,4 +68,8 @@
         </div>
     </div> 
 </div> 
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'drive/js/profile.js' %}"></script>
 {% endblock %}
