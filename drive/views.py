@@ -14,13 +14,7 @@ from .models import Task, Category
 #   The user can enter information and then send a POST request to add a task to the list
 #   This method has the main functionality of the project
 def index(request): #the index view
-    # if request.user.is_authenticated:
-    #     todos = Task.objects.filter(owner=request.user) #quering all todos with the object manager
-    # else:
-    #     todos= Task.objects.filter(owner=None)
-    # categories = Category.objects.all() #getting all categories with object manager
-    # if request.method=="GET":
-    #     return render(request, "drive/index.html", {"todos": todos, "categories": categories})
+
     if request.method == 'GET':
         return render(request, "drive/index.html")
     if request.method == "POST": #checking if the request method is a POST
@@ -38,32 +32,15 @@ def index(request): #the index view
                 messages.error(request, 'No hubo match para los datos ingresados.')
                 return HttpResponseRedirect('/')
         else: #Register
-            nombre = request.POST['nombre']
+            nombre = request.POST['Nombre']
+            apellido =  request.POST['Apellido']
             contraseña = request.POST['contraseña']
             apodo = request.POST['apodo']
             mail = request.POST['mail']
-            user = User.objects.create_user(username=nombre, password=contraseña,email=mail,apodo=apodo)
+            user = User.objects.create_user(username=nombre, password=contraseña,email=mail,apodo=apodo, 
+                first_name= nombre, last_name=apellido)
             messages.success(request, 'Se creó el usuario para ' + user.apodo + '!')
             return HttpResponseRedirect('/')
-
-        # if "taskAdd" in request.POST: #checking if there is a request to add a todo
-        #     title = request.POST["description"] #title
-        #     date = str(request.POST["date"]) #date
-        #     category = request.POST["category_select"] #category
-        #     content = title + " -- " + date + " " + category #content
-        #     if request.user.is_authenticated:
-        #         Todo = Task(title=title, content=content, due_date=date, category=Category.objects.get(name=category),owner=request.user)
-        #     else:
-        #         Todo = Task(title=title, content=content, due_date=date, category=Category.objects.get(name=category))
-        #     Todo.save() #saving the todo
-        #     return redirect("/") #reloading the page
-        # if "taskDelete" in request.POST: #checking if there is a request to delete a todo
-        #     checkedlist = request.POST["checkedbox"] #checked todos to be deleted
-        #     for todo_id in checkedlist:
-        #         print(todo_id,"Todo id")
-        #         todo = Task.objects.get(id=int(todo_id)) #getting todo id
-        #         todo.delete() #deleting todo
-        #     return render(request, "drive/index.html", {"todos": todos, "categories": categories})
         
 #Called with /logout, only available if the user is authenticated
 #   Logouts the authenticated user and shows the screen as if is not registered
@@ -75,6 +52,7 @@ def logout_user(request):
 #   the user information displayed in the screen
 @login_required
 def view_profile(request):
+    
     if request.method == 'GET':
         nombreDeUsuario = request.user.username
         nombre = request.user.first_name
@@ -82,6 +60,17 @@ def view_profile(request):
         mail = request.user.email
         apodo = request.user.apodo
         return render(request, "drive/profile.html")
+    
+    if request.method == "POST": #checking if the request method is a POST
+        nombre      = request.POST['Nombre']
+        apellido    = request.POST['Apellido']
+        apodo       = request.POST['Apodo']
+        descripcion = request.POST['Descripcion']
+        fecha_nac   = request.POST['Nacimiento']
+        # Modifica valores
+        messages.success(request, 'Se modificaron tus datos!')
+        return HttpResponseRedirect('/')
+
 
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
