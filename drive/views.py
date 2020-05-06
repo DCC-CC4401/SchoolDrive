@@ -6,6 +6,7 @@ from django.shortcuts import render,redirect
 from drive.models import User
 from .models import Task, Category
 
+
 #El Index lo documente por ahora para el todolist, pero de ahi lo cambiamos, no lo quiero borrar porque a futuro
 #   puede ser util tenerlo.
 

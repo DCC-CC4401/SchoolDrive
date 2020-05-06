@@ -6,7 +6,7 @@
             {% if messages %}
                 <ul>
                     {% for message in messages %}
-                        <div class="alert alert-primary">
+                        <div class='alert {{message.tags}}'>
                             {{message}}
                         </div>
                     {% endfor %}
