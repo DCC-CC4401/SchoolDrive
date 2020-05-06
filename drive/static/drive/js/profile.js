@@ -55,7 +55,7 @@ function apodoError() {
 };
 
 $(fechausuario).change( function (){
-    if ($(fechausuario).val()!=null){
+    if ($(fechausuario).val()){
         fechausuario.classList.remove("invalid");
         fechaspanError.style.display = "none";
     } else {
@@ -83,7 +83,7 @@ form.addEventListener('submit', function (event){
 		apodoError();
 		count++;
     }
-    if ($(fechausuario).val()==null){
+    if (!$(fechausuario).val()){
         fechaError();
         count++;
     }
