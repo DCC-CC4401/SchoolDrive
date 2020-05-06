@@ -23,7 +23,7 @@ def index(request): #the index view
             mail = request.POST['mail']
             contraseña = request.POST['contraseña']
             print('mail:' +mail+'pass: '+contraseña) ## No loguea :c
-            usuario = authenticate(request,email=mail,password=contraseña)
+            usuario = authenticate(request,username=mail,password=contraseña)
             if usuario is not None:
                 login(request, usuario)
                 messages.success(request, 'Te damos la bienvenida ' + usuario.apodo + '!')
@@ -37,7 +37,7 @@ def index(request): #the index view
             contraseña = request.POST['contraseña']
             apodo = request.POST['apodo']
             mail = request.POST['mail']
-            user = User.objects.create_user(username=nombre, password=contraseña,email=mail,apodo=apodo, 
+            user = User.objects.create_user(username=mail, password=contraseña,email=mail,apodo=apodo, 
                 first_name= nombre, last_name=apellido)
             messages.success(request, 'Se creó el usuario para ' + user.apodo + '!')
             return HttpResponseRedirect('/')
