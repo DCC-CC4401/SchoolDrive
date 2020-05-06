@@ -14,7 +14,7 @@
         <!-- Editar Perfil -->
         <div class="col-6">
             <h1> Editar Perfil </h1>
-            <form>
+            <form method="post">
                 {% csrf_token %}
                 <div class="form-group row"> <!-- Fila -->
                     <div class="col">
@@ -33,14 +33,33 @@
                         <input type="email" class="form-control" id="mail" value="{{ user.email }}" disabled>
                     </div>
                 </div>
+                
+                <div class="form-group row"> <!-- Fila -->
+                    <div class="col">
+                        <label for="Apodo">Apodo: </label>
+                        <input type="text" class="form-control" id="Apodo" name="Apodo" value="{{ user.apodo }}" required>
+                    </div>
+                    <div class="col">
+                        <label for="Nacimiento">Fecha de Nacimiento: </label>
+                        <input type="date" class="form-control" id="Nacimiento" name="Nacimiento" value="{{ user.fecha_nacimiento }}">
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <div class="col">
+                        <label for="Descripcion">Descripcion: </label>
+                        <textarea class="form-control" id="Descripcion" name="Descripcion">{{ user.descripcion }}</textarea>
+                    </div>
+                </div>
+                
 
-                {{ user.apodo }} |
+                <!-- {{ user.apodo }} |
                 {{ user.first_name }} |
                 {{ user.last_name }} |
                 {{ user.email }} |
                 {{ user.descripcion }} |
-                {{ user.fecha_nacimiento }} 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                {{ user.fecha_nacimiento }}  -->
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
             </form>
         </div>
     </div> 
