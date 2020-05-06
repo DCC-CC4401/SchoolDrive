@@ -1,0 +1,48 @@
+{% extends 'drive/menu.html' %}
+{% block title %} SchoolDrive | Perfil {% endblock %}
+{% block content %}
+<div class="container" style="margin-top:2em">
+    <div class="row">
+
+        <!-- Fotito -->
+        <div class="col-6">
+            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+            {% load static %}
+            <img src="{% static 'drive/img/doggo.jpg' %}" style="width: 400px; height: 400px;"> </img>
+        </div>
+
+        <!-- Editar Perfil -->
+        <div class="col-6">
+            <h1> Editar Perfil </h1>
+            <form>
+                <div class="form-group row"> <!-- Fila -->
+                    <div class="col">
+                        <label for="Nombre">Nombre: </label>
+                        <input type="text" class="form-control" id="Nombre" name="Nombre" value="{{ user.first_name }}" required>
+                    </div>
+                    <div class="col">
+                        <label for="Apellido">Apellido: </label>
+                        <input type="text" class="form-control" id="Apellido" name="Apellido" value="{{ user.last_name }}" required>
+                    </div>
+                </div>
+                
+                <div class="form-group row"> <!-- Fila -->
+                    <div class="col">
+                        <label for="mail">Mail: </label>
+                        <input type="email" class="form-control" id="mail" value="{{ user.email }}" disabled>
+                    </div>
+                </div>
+
+                {{ user.apodo }} |
+                {{ user.first_name }} |
+                {{ user.last_name }} |
+                {{ user.email }} |
+                {{ user.descripcion }} |
+                {{ user.username }} |
+                {{ user.fecha_nacimiento }} 
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div> 
+</div> 
+{% endblock %}

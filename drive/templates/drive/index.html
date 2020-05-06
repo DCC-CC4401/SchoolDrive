@@ -1,5 +1,5 @@
 {% extends 'drive/menu.html' %}
-{% block title %} SchoolDrive {% endblock %}
+{% block title %} SchoolDrive | Home {% endblock %}
 {% block content %}
     <div>
         <div class="container" style="margin-top:2em">
@@ -13,13 +13,27 @@
                 </ul>
             {% endif %}
             <div class="row"> <!-- Rows y cols tienen su documentación en grid-->
-                <div class="col-9">
-                    <h1>School drive</h1>
-                    <p class="tagline">texto interesante aquí (hi!)</p>
+                <div class="col">
+                    <div class="jumbotron">
+                        <h1 class="display-4">
+                            {% if user.is_authenticated %}
+                                Hola, {{ user.apodo }}!
+                            {% else %}
+                                School Drive
+                            {% endif %}
+                        </h1>
+                        <p class="lead">Aquí podrás subir todo tu material de estudios y compartirlo con tus compañer@s</p>
+                        <hr class="my-4">
+                        <p>Puedes realizar tu búsqueda aquí (proximamente)</p>
+                        <form class="form-inline" style="align-content: center;">
+                            <input class="form-control" type="search" name="buscar" placeholder="Search" aria-label="Search" disabled>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
+                          </form>
+                      </div>
                 </div>
 
                 {% if not user.is_authenticated %}
-                <div class="col-3" style="
+                <div class="col-4" style="
                 border: 1px solid rgba(0,0,0,.15);
                 border-radius: .25rem;
                 padding: .5rem .75rem;
@@ -27,31 +41,49 @@
                     <h1> Registrarse </h1>
                     <form id="form" method="post" novalidate>
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="nombre_usuario" style="font-size: medium;">Nombre: </label>
-                            <input type="text" class="form-control" id=nombre_usuario name="nombre" required>
-                            <span id="nombreError" >Debes ingresar un nombre válido</span>
+                        <div class="row form-group">
+                            <div class="col">
+                                <label for="nombre_usuario" style="font-size: small;">Nombre: </label>
+                                <input type="text" class="form-control" id=nombre_usuario name="Nombre" required>
+                                <span id="nombreError" >Debes ingresar un nombre válido</span>
+                            </div>
+                            <div class="col">
+                                <label for="contraseña" style="font-size: small;">Apellido: </label>
+                                <input type="text" class="form-control" id="Apellido" name="Apellido" required>
+                                <span id="contraseñaErrorInput" >Debes ingresar tu apellido</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="contraseña" style="font-size: medium;">Contraseña: </label>
-                            <input type="password" class="form-control" id="contraseña" name="contraseña" required>
-                            <span id="contraseñaErrorInput" >Debes ingresar una contraseña</span>
+
+                        <div class="row form-group">
+                            <div class="col">
+                                <label for="mail" style="font-size: small;">Mail: </label>
+                                <input type="email" class="form-control" id="mail" name="mail" required>
+                                <small id="emailHelp" class="form-text text-muted">No compartiremos tu e-mail con nadie.</small>
+                                <span id="mailError" >Debes ingresar un email válido</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="contraseña" style="font-size: medium;">Ingresa la contraseña nuevamente: </label>
-                            <input type="password" class="form-control" id="contraseñaVerif" name="contraseña" required>
-                            <span id="contraseñaError" >Las contraseñas no son iguales</span>
+
+                        <div class="row form-group">
+                            <div class="col">
+                                <label for="contraseña" style="font-size: small;">Contraseña: </label>
+                                <input type="password" class="form-control" id="contraseña" name="contraseña" required>
+                                <span id="contraseñaErrorInput" >Debes ingresar una contraseña</span>
+                            </div>
+                            <div class="col">
+                                <label for="contraseña" style="font-size: small;">Repetir Contraseña: </label>
+                                <input type="password" class="form-control" id="contraseñaVerif" name="contraseña" required>
+                                <span id="contraseñaError" >Las contraseñas no son iguales</span>
+                            </div>
                         </div>
-                        <div class="form-group" style="font-size: medium;">
-                            <label for="apodo">Apodo: </label>
-                            <input type="text" class="form-control" id="apodo" name="apodo" required>
-                            <span id="apodoError" >Debes ingresar un apodo válido</span>
+
+                        <div class="row form-group">
+                            <div class="col">
+                                <label for="apodo" style="font-size: small;">Apodo: </label>
+                                <input type="text" class="form-control" id="apodo" name="apodo" required>
+                                <span id="apodoError" >Debes ingresar un apodo válido</span>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="mail" style="font-size: medium;">Mail: </label>
-                            <input type="email" class="form-control" id="mail" name="mail" required>
-                            <span id="mailError" >Debes ingresar un email válido</span>
-                        </div>
+
                         <button type="submit" name="register" class="btn btn-primary">Registrarse</button>
                     </form>
                 </div>
