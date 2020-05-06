@@ -8,13 +8,14 @@
         <div class="col-6">
             <h1>{{ user.first_name }} {{ user.last_name }}</h1>
             {% load static %}
-            <img src="{% static 'drive/img/doggo.jpg' %}" style="width: 400px; height: 400px;"> </img>
+            <img src="{% static 'drive/img/doggo.jpg' %}" style="width: 90%; "> </img>
         </div>
 
         <!-- Editar Perfil -->
         <div class="col-6">
             <h1> Editar Perfil </h1>
             <form>
+                {% csrf_token %}
                 <div class="form-group row"> <!-- Fila -->
                     <div class="col">
                         <label for="Nombre">Nombre: </label>

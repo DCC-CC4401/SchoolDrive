@@ -59,19 +59,17 @@ def logout_user(request):
 def view_profile(request):
     
     if request.method == 'GET':
-        nombreDeUsuario = request.user.username
-        nombre = request.user.first_name
-        apellido = request.user.last_name
-        mail = request.user.email
-        apodo = request.user.apodo
         return render(request, "drive/profile.html")
     
     if request.method == "POST": #checking if the request method is a POST
-        nombre      = request.POST['Nombre']
-        apellido    = request.POST['Apellido']
-        apodo       = request.POST['Apodo']
-        descripcion = request.POST['Descripcion']
-        fecha_nac   = request.POST['Nacimiento']
+
+        usuario = request.user
+        usuario.first_name       = request.POST['Nombre']
+        usuario.last_name        = request.POST['Apellido']
+        #usuario.apodo            = request.POST['Apodo']
+        #usuario.descripcion      = request.POST['Descripcion']
+        #usuario.fecha_nacimiento = request.POST['Nacimiento']
+        usuario.save()
         # Modifica valores
         messages.success(request, 'Se modificaron tus datos!')
         return HttpResponseRedirect('/')
