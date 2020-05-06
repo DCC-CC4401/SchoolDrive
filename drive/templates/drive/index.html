@@ -24,11 +24,17 @@
                         </h1>
                         <p class="lead">Aquí podrás subir todo tu material de estudios y compartirlo con tus compañer@s</p>
                         <hr class="my-4">
-                        <p>Puedes realizar tu búsqueda aquí (proximamente)</p>
-                        <form class="form-inline" style="align-content: center;">
-                            <input class="form-control" type="search" name="buscar" placeholder="Search" aria-label="Search" disabled>
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>Search</button>
-                          </form>
+                        {% if user.is_authenticated %}
+                                Realiza tu búsqueda aquí:
+                            {% else %}
+                                <p> Para empezar, debes registrarte en el formulario a la derecha. <br>
+                                    También puedes realizar tu búsqueda sin estar registrado (proximamente)</p>
+                            {% endif %}
+                        
+                        <form class="form-inline">
+                            <input class="form-control" type="text" name="buscar" placeholder="Archivo, usuario, ..." aria-label="Search" disabled>
+                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" disabled>Buscar</button>
+                        </form>
                       </div>
                 </div>
 
@@ -44,12 +50,12 @@
                         <div class="row form-group">
                             <div class="col">
                                 <label for="nombre_usuario" style="font-size: small;">Nombre: </label>
-                                <input type="text" class="form-control" id=nombre_usuario name="Nombre" required>
+                                <input type="text" class="form-control" id=nombre_usuario name="Nombre" placeholder="Johnny" required>
                                 <span id="nombreError" >Debes ingresar un nombre válido</span>
                             </div>
                             <div class="col">
                                 <label for="Apellido" style="font-size: small;">Apellido: </label>
-                                <input type="text" class="form-control" id="Apellido" name="Apellido" required>
+                                <input type="text" class="form-control" id="Apellido" name="Apellido" placeholder="Bravo" required>
                                 <span id="apellidoError">Debes ingresar tu apellido</span>
                             </div>
                         </div>
@@ -57,7 +63,7 @@
                         <div class="row form-group">
                             <div class="col">
                                 <label for="mail" style="font-size: small;">Mail: </label>
-                                <input type="email" class="form-control" id="mail" name="mail" required>
+                                <input type="email" class="form-control" id="mail" name="mail" placeholder="email@example.com" required>
                                 <small id="emailHelp" class="form-text text-muted">No compartiremos tu e-mail con nadie.</small>
                                 <span id="mailError" >Debes ingresar un email válido</span>
                             </div>
@@ -66,12 +72,12 @@
                         <div class="row form-group">
                             <div class="col">
                                 <label for="contraseña" style="font-size: small;">Contraseña: </label>
-                                <input type="password" class="form-control" id="contraseña" name="contraseña" required>
+                                <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Password" required>
                                 <span id="contraseñaErrorInput" >Debes ingresar una contraseña</span>
                             </div>
                             <div class="col">
                                 <label for="contraseña" style="font-size: small;">Repetir Contraseña: </label>
-                                <input type="password" class="form-control" id="contraseñaVerif" name="contraseña" required>
+                                <input type="password" class="form-control" id="contraseñaVerif" name="contraseña" placeholder="Password" required>
                                 <span id="contraseñaError" >Las contraseñas no son iguales</span>
                             </div>
                         </div>
@@ -79,12 +85,12 @@
                         <div class="row form-group">
                             <div class="col">
                                 <label for="apodo" style="font-size: small;">Apodo: </label>
-                                <input type="text" class="form-control" id="apodo" name="apodo" required>
+                                <input type="text" class="form-control" id="apodo" name="apodo" placeholder="Handsome" required>
                                 <span id="apodoError" >Debes ingresar un apodo válido</span>
                             </div>
                         </div>
 
-                        <button type="submit" name="register" class="btn btn-primary">Registrarse</button>
+                        <button type="submit" name="register" class="btn btn-primary btn-block">Registrarse</button>
                     </form>
                 </div>
                 {% endif %}

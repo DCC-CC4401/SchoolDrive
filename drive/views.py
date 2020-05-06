@@ -69,7 +69,6 @@ def view_profile(request):
         usuario.apodo            = request.POST['Apodo']
         usuario.descripcion      = request.POST['Descripcion']
         usuario.fecha_nacimiento = request.POST['Nacimiento']
-        print(usuario.fecha_nacimiento)
         usuario.save()
         # Modifica valores
         messages.success(request, 'Se modificaron tus datos!')

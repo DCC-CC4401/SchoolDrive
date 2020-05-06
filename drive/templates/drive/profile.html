@@ -41,7 +41,7 @@
                     </div>
                     <div class="col">
                         <label for="Nacimiento">Fecha de Nacimiento: </label>
-                        <input type="date" class="form-control" id="Nacimiento" name="Nacimiento" value="{{ user.fecha_nacimiento }}">
+                        <input type="date" class="form-control" id="Nacimiento" name="Nacimiento" value="{{ user.fecha_nacimiento|truncatewords:3 }}" required>
                     </div>
                 </div>
                 
