@@ -2,6 +2,8 @@
 const form  = document.getElementById('form');
 const nombreusuario = document.getElementById('nombre_usuario');
 const nombrespanError = document.getElementById('nombreError');
+const apellidousuario = document.getElementById('Apellido');
+const apellidospanError = document.getElementById('apellidoError');
 const constraseñausuario = document.getElementById('contraseña');
 const constraseñaVerifusuario = document.getElementById('contraseñaVerif');
 const contraseñaspanErrorInput = document.getElementById('contraseñaErrorInput');
@@ -25,6 +27,20 @@ $(nombreusuario).change( function (){
 function nombreError() {
     nombreusuario.classList += " invalid";
     nombrespanError.style.display = "block";
+};
+
+$(apellidousuario).change( function (){
+    if (usuarioregex.test($(apellidousuario).val())){
+        apellidousuario.classList.remove("invalid");
+        apellidospanError.style.display = "none";
+    } else {
+        apellidoError();
+    }
+})
+
+function apellidoError() {
+    apellidousuario.classList += " invalid";
+    apellidospanError.style.display = "block";
 };
 
 $(constraseñausuario).change( function (){
@@ -95,6 +111,10 @@ form.addEventListener('submit', function (event){
     }
     if (nombreusuario.validity.valueMissing){
 		nombreError();
+		count++;
+    }
+    if (apellidousuario.validity.valueMissing){
+		apellidoError();
 		count++;
     }
     if (apodousuario.validity.valueMissing){
