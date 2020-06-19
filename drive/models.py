@@ -17,13 +17,16 @@ class Archivo(models.Model):
     formato = models.CharField(max_length = 250)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
+#En la variable padres, la gracia es que cada carpeta tiene un padre, y los hijos no es necesario entregarlos
+#   ya que con esta implementacion, en la parte de related_name nos permite acceder a los hijos, ejemplo:
+#   con miCarpeta.sub_carpeta.all() entregara un queryset, esto en los templates se escribe como {{ miCarpeta.sub_carpeta.all }}
 class Carpeta(models.Model):
     class Meta:
         unique_together = ['id', 'usuario']
     nombre = models.CharField(max_length = 250)
     fecha_creacion = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) # a date
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    padres = models.ForeignKey('self', blank = True, null = True, related_name='sub_carpeta')
 
 
 class Category(models.Model):
