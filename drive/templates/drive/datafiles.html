@@ -12,33 +12,33 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-content">
                                 <div class="file-manager">
-                                    <h5>Show:</h5>
+                                    <h5>Mostrar:</h5>
                                     <a href="#" class="file-control active">Ale</a>
                                     <a href="#" class="file-control">Documents</a>
                                     <a href="#" class="file-control">Audio</a>
                                     <a href="#" class="file-control">Images</a>
                                     <div class="hr-line-dashed"></div>
-                                    <button class="btn btn-primary btn-block">Upload Files</button>
+                                    <button class="btn btn-primary btn-block">Subir archivo</button>
                                     <div class="hr-line-dashed"></div>
-                                    <h5>Folders</h5>
+                                    <h5>Carpetas</h5>
                                     <ul class="folder-list" style="padding: 0">
-                                        <li><a href=""><i class="fa fa-folder"></i> Files</a></li>
-                                        <li><a href=""><i class="fa fa-folder"></i> Pictures</a></li>
-                                        <li><a href=""><i class="fa fa-folder"></i> Web pages</a></li>
-                                        <li><a href=""><i class="fa fa-folder"></i> Illustrations</a></li>
-                                        <li><a href=""><i class="fa fa-folder"></i> Films</a></li>
-                                        <li><a href=""><i class="fa fa-folder"></i> Books</a></li>
+                                        <li><a href=""><i class="fa fa-folder"></i> Archivos</a></li>
+                                        <li><a href=""><i class="fa fa-folder"></i> Imágenes</a></li>
+                                        <li><a href=""><i class="fa fa-folder"></i> Páginas Web</a></li>
+                                        <li><a href=""><i class="fa fa-folder"></i> Ilustraciones</a></li>
+                                        <li><a href=""><i class="fa fa-folder"></i> Videos</a></li>
+                                        <li><a href=""><i class="fa fa-folder"></i> Libros</a></li>
                                     </ul>
-                                    <h5 class="tag-title">Tags</h5>
+                                    <h5 class="tag-title">Etiquetas</h5>
                                     <ul class="tag-list" style="padding: 0">
-                                        <li><a href="">Family</a></li>
-                                        <li><a href="">Work</a></li>
-                                        <li><a href="">Home</a></li>
-                                        <li><a href="">Children</a></li>
-                                        <li><a href="">Holidays</a></li>
-                                        <li><a href="">Music</a></li>
-                                        <li><a href="">Photography</a></li>
-                                        <li><a href="">Film</a></li>
+                                        <li><a href="">Familia</a></li>
+                                        <li><a href="">Trabajo</a></li>
+                                        <li><a href="">Casa</a></li>
+                                        <li><a href="">Niños</a></li>
+                                        <li><a href="">Vacaciones</a></li>
+                                        <li><a href="">Musica</a></li>
+                                        <li><a href="">Fotografia</a></li>
+                                        <li><a href="">Cine</a></li>
                                     </ul>
                                     <div class="clearfix"></div>
                                 </div>
@@ -71,7 +71,8 @@
                                             <span class="corner"></span>
                 
                                             <div class="image">
-                                                <img alt="image" class="img-responsive" src="https://via.placeholder.com/400x300">
+                                                {% load static %}
+                                                <img alt="image" style="height: 100%;text-align: center;" class="img-responsive" src="{% static 'drive/img/doggo.jpg' %}">
                                             </div>
                                             <div class="file-name">
                                                 Italy street.jpg
