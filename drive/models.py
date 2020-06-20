@@ -7,6 +7,7 @@ class User(AbstractUser):
     apodo = models.CharField(max_length=30)
     descripcion = models.TextField(blank = True)
     fecha_nacimiento = models.DateField(null = True)
+    profile_picture = models.FileField(upload_to='profile_pictures/',blank=True, null= True)
     class Meta:
         unique_together = ['email']
     

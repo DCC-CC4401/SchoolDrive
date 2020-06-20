@@ -191,3 +191,13 @@ a.compose-mail {
 a:hover{
 text-decoration:none;    
 }
+
+
+.profilepic {
+  object-fit: cover;
+  width: 120px;
+  height: 120px;
+  border-radius: 10%;
+  border-color: lightgray;
+  border-style: solid;
+}

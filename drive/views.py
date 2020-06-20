@@ -3,8 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
+from datetime import *
 from drive.models import User
 from .models import Task, Category
+import os
 
 
 #El Index lo documente por ahora para el todolist, pero de ahi lo cambiamos, no lo quiero borrar porque a futuro
@@ -62,17 +64,29 @@ def view_profile(request):
         return render(request, "drive/profile.html")
     
     if request.method == "POST": #checking if the request method is a POST
-
         usuario = request.user
-        usuario.first_name       = request.POST['Nombre']
-        usuario.last_name        = request.POST['Apellido']
-        usuario.apodo            = request.POST['Apodo']
-        usuario.descripcion      = request.POST['Descripcion']
-        usuario.fecha_nacimiento = request.POST['Nacimiento']
+
+        if 'profilepic' in request.POST: #Log In
+            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+            MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+            if request.FILES['adjunto']:
+                old = usuario.profile_picture
+                usuario.profile_picture  = request.FILES['adjunto']
+                usuario.profile_picture.name = usuario.first_name + "##" + usuario.last_name + "##" + str(datetime.now()) +".png"
+                os.remove(os.path.join(MEDIA_ROOT, old.name))
+        else:
+            usuario.first_name       = request.POST['Nombre']
+            usuario.last_name        = request.POST['Apellido']
+            usuario.apodo            = request.POST['Apodo']
+            usuario.descripcion      = request.POST['Descripcion']
+            if request.POST['Nacimiento']:
+                usuario.fecha_nacimiento = request.POST['Nacimiento']
+        
+
         usuario.save()
         # Modifica valores
         messages.success(request, 'Se modificaron tus datos!')
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/profile')
 
 
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
