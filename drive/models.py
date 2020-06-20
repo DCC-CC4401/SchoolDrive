@@ -9,6 +9,7 @@ class User(AbstractUser):
     fecha_nacimiento = models.DateField(null = True)
     class Meta:
         unique_together = ['email']
+    avatar = models.FileField(upload_to='avatars/',blank=True, null= True)
     
 class Archivo(models.Model):
     class Meta:
@@ -16,6 +17,7 @@ class Archivo(models.Model):
     nombre = models.CharField(max_length = 250)
     formato = models.CharField(max_length = 250)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    
 
 #En la variable padres, la gracia es que cada carpeta tiene un padre, y los hijos no es necesario entregarlos
 #   ya que con esta implementacion, en la parte de related_name nos permite acceder a los hijos, ejemplo:

@@ -13,7 +13,7 @@ python -m venv .venv
 Activar el ambiente:
 Windows:
 ```
-. .\.venv\Scripts\Activate.ps1
+. .\.venv\Scripts\Activate.ps1 (a mi me sirvió este:c .venv\Scripts\activate)
 ```
 Linux:
 ```

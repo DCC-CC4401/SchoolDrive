@@ -77,3 +77,14 @@ def view_profile(request):
 
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
+
+#Called with /files, only available for aunthenticated users and shows
+#   the user information displayed in the screen
+@login_required
+def view_files(request):
+    
+    if request.method == 'GET':
+        return render(request, "drive/datafiles.html")
+
+    #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
+    pass
