@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
-from drive.models import User
+from drive.models import User, Archivo
 from .models import Task, Category
 
 
@@ -69,7 +69,7 @@ def view_profile(request):
         usuario.apodo            = request.POST['Apodo']
         usuario.descripcion      = request.POST['Descripcion']
         usuario.fecha_nacimiento = request.POST['Nacimiento']
-        
+
         # editar avatar
         if request.FILES['Avatar']:
             avatar = request.FILES['Avatar']
@@ -90,6 +90,42 @@ def view_files(request):
     
     if request.method == 'GET':
         return render(request, "drive/datafiles.html")
+
+    #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
+    pass
+
+#Called with /profile, only available por aunthenticated users and shows
+#   the user information displayed in the screen
+@login_required
+def upload_file(request):
+    
+    #if request.user.is_authenticated:
+    #    archivos = Archivo.objects.filter(usuario=request.user)
+
+    if request.method == 'GET':
+        return render(request, "drive/profile.html")
+    
+    if request.method == "POST": #checking if the request method is a POST
+
+        
+
+        if request.FILES['Archivo']:
+            archive = Archivo()
+            archivo_nuevo = request.FILES['Archivo']
+            archive.archivo = archivo_nuevo
+            archive.nombre = archivo_nuevo.name.split(".")[0]
+            archive.formato = archivo_nuevo.name.split(".")[1]
+            archive.usuario = request.user
+            archive.save()
+            # Modifica valores
+            messages.success(request, 'Archivo subido!')
+            return HttpResponseRedirect('/')
+        
+        # editar avatar
+        
+        
+        
+
 
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
