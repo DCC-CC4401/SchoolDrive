@@ -69,6 +69,11 @@ def view_profile(request):
         usuario.apodo            = request.POST['Apodo']
         usuario.descripcion      = request.POST['Descripcion']
         usuario.fecha_nacimiento = request.POST['Nacimiento']
+        
+        # editar avatar
+        if request.FILES['Avatar']:
+            avatar = request.FILES['Avatar']
+            usuario.avatar = avatar
         usuario.save()
         # Modifica valores
         messages.success(request, 'Se modificaron tus datos!')

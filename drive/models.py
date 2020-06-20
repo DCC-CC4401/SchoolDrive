@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     apodo = models.CharField(max_length=30)
     descripcion = models.TextField(blank = True)
-    fecha_nacimiento = models.DateField(null = True)
+    fecha_nacimiento = models.DateField(null = True, blank = True)
     class Meta:
         unique_together = ['email']
     avatar = models.FileField(upload_to='avatars/',blank=True, null= True)
@@ -17,6 +17,8 @@ class Archivo(models.Model):
     nombre = models.CharField(max_length = 250)
     formato = models.CharField(max_length = 250)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    archivo = models.FileField(upload_to='archivos/', blank=False, null=True)
+    fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) 
     
 
 
