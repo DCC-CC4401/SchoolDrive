@@ -63,6 +63,7 @@ def view_profile(request):
         return render(request, "drive/profile.html")
     
     if request.method == "POST": #checking if the request method is a POST
+        usuario = request.user
 
         usuario = request.user
         
@@ -85,7 +86,7 @@ def view_profile(request):
 
         # Modifica valores
         messages.success(request, 'Se modificaron tus datos!')
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/profile')
 
 
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
