@@ -63,12 +63,25 @@ def view_profile(request):
     
     if request.method == "POST": #checking if the request method is a POST
 
+        if 'profilepic' in request.POST: #Log In
+            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+            MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+            if request.FILES['adjunto']:
+                old = usuario.profile_picture
+                usuario.profile_picture  = request.FILES['adjunto']
+                usuario.profile_picture.name = usuario.first_name + "##" + usuario.last_name + "##" + str(datetime.now()) +".png"
+                os.remove(os.path.join(MEDIA_ROOT, old.name))
+
+        else:
+
         usuario = request.user
         usuario.first_name       = request.POST['Nombre']
         usuario.last_name        = request.POST['Apellido']
         usuario.apodo            = request.POST['Apodo']
         usuario.descripcion      = request.POST['Descripcion']
         usuario.fecha_nacimiento = request.POST['Nacimiento']
+
+        
 
         # editar avatar
         if request.FILES['Avatar']:
