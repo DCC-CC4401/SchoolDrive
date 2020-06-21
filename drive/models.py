@@ -11,16 +11,6 @@ class User(AbstractUser):
         unique_together = ['email']
     avatar = models.FileField(upload_to='avatars/',blank=True, null= True)
     
-class Archivo(models.Model):
-    class Meta:
-        unique_together = ['nombre', 'formato', 'usuario'] #carpeta
-    archivo = models.FileField(upload_to='archivos/', blank=False, null=True)
-    nombre = models.CharField(max_length = 250)
-    formato = models.CharField(max_length = 250)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    carpeta = models.IntegerField(blank=False, null=False)
-    
 
 #En la variable padres, la gracia es que cada carpeta tiene un padre, y los hijos no es necesario entregarlos
 #   ya que con esta implementacion, en la parte de related_name nos permite acceder a los hijos, ejemplo:
@@ -31,7 +21,17 @@ class Carpeta(models.Model):
     nombre = models.CharField(max_length = 250)
     fecha_creacion = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) # a date
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    padre = models.IntegerField(blank = True, null = True, default=None)
+    padre = models.ForeignKey('self', blank = True, null = True, default=None, on_delete=models.CASCADE)
+
+class Archivo(models.Model):
+    class Meta:
+        unique_together = ['nombre', 'formato', 'usuario', 'carpeta'] 
+    archivo = models.FileField(upload_to='archivos/', blank=False, null=True)
+    nombre = models.CharField(max_length = 250)
+    formato = models.CharField(max_length = 250)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
+    carpeta = models.ForeignKey(Carpeta, blank=False, null=False, on_delete=models.CASCADE)
 
 
 class Category(models.Model):
