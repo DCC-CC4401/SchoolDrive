@@ -13,13 +13,13 @@ class User(AbstractUser):
     
 class Archivo(models.Model):
     class Meta:
-        unique_together = ['nombre', 'formato', 'usuario', 'carpeta']
+        unique_together = ['nombre', 'formato', 'usuario'] #carpeta
     archivo = models.FileField(upload_to='archivos/', blank=False, null=True)
     nombre = models.CharField(max_length = 250)
     formato = models.CharField(max_length = 250)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    carpeta = models.IntegerField()
+    # carpeta = models.IntegerField()
     
 
 #En la variable padres, la gracia es que cada carpeta tiene un padre, y los hijos no es necesario entregarlos
