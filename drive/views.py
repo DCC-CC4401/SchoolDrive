@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
-from drive.models import User, Archivo
+from .models import User, Archivo, Carpeta
 from .models import Task, Category
 from datetime import *
 import os
@@ -42,7 +42,9 @@ def index(request): #the index view
             if not User.objects.filter(username=mail).exists():
                 user = User.objects.create_user(username=mail, password=contraseña,email=mail,apodo=apodo, 
                 first_name= nombre, last_name=apellido)
-                messages.success(request, 'Se creó el usuario para ' + user.apodo + '!')
+                carpeta_raiz = Carpeta(nombre = 'Raiz', usuario = user)
+                carpeta_raiz.save()
+                messages.success(request, 'Se creó el usuario para ' + user.apodo + '! (carpeta '+carpeta_raiz.nombre+' creada)')
             else:
                 messages.error(request, 'Ya existe un usuario con ese email. Intenta iniciando sesión con tu email y contraseña.')
                 return HttpResponseRedirect('/')
@@ -111,7 +113,7 @@ def view_files(request):
 def upload_file(request):
     
     #if request.user.is_authenticated:
-    #    archivos = Archivo.objects.filter(usuario=request.user)
+    # archivos = Archivo.objects.filter(usuario=request.user)
 
     if request.method == 'GET':
         return render(request, "drive/profile.html")
@@ -121,12 +123,14 @@ def upload_file(request):
         
 
         if request.FILES['Archivo']:
-            archive = Archivo()
-            archivo_nuevo = request.FILES['Archivo']
-            archive.archivo = archivo_nuevo
-            archive.nombre = archivo_nuevo.name
-            archive.formato = archivo_nuevo.name.split(".")[1]
-            archive.usuario = request.user
+            Carpetas = Carpeta.objects.filter(usuario = request.user)
+            archivo_nuevo = request.FILES['Archivo'] # archivo
+            carpeta_id = request.POST['Carpeta']  # seleccionar carpeta
+            nombre = archivo_nuevo.name
+            formato = archivo_nuevo.name.split(".")[1]
+            usuario = request.user
+
+            archive = Archivo(nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta_id)
             archive.save()
             # Modifica valores
             messages.success(request, 'Archivo subido!')
