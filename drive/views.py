@@ -125,12 +125,12 @@ def upload_file(request):
         if request.FILES['Archivo']:
             Carpetas = Carpeta.objects.filter(usuario = request.user)
             archivo_nuevo = request.FILES['Archivo'] # archivo
-            carpeta_id = request.POST['Carpeta']  # seleccionar carpeta
+            carpeta = request.POST['Carpeta']  # seleccionar carpeta
             nombre = archivo_nuevo.name
             formato = archivo_nuevo.name.split(".")[1]
             usuario = request.user
 
-            archive = Archivo(nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta_id)
+            archive = Archivo(nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
             archive.save()
             # Modifica valores
             messages.success(request, 'Archivo subido!')
