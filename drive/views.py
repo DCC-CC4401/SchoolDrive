@@ -82,9 +82,11 @@ def view_profile(request):
             usuario.last_name        = request.POST['Apellido']
             usuario.apodo            = request.POST['Apodo']
             usuario.descripcion      = request.POST['Descripcion']
-            usuario.fecha_nacimiento = request.POST['Nacimiento']
+            if request.POST['Nacimiento']:
+                usuario.fecha_nacimiento = request.POST['Nacimiento']
 
         # Modifica valores
+        usuario.save()
         messages.success(request, 'Se modificaron tus datos!')
         return HttpResponseRedirect('/profile')
 
@@ -122,7 +124,7 @@ def upload_file(request):
             archive = Archivo()
             archivo_nuevo = request.FILES['Archivo']
             archive.archivo = archivo_nuevo
-            archive.nombre = archivo_nuevo.name.split(".")[0]
+            archive.nombre = archivo_nuevo.name
             archive.formato = archivo_nuevo.name.split(".")[1]
             archive.usuario = request.user
             archive.save()

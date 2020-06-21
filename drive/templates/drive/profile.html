@@ -24,8 +24,8 @@
                 <div class="form-group row">
                     <div class="col-4">
                         <label for="Picture">Foto: </label><br>
-                        {% if user.profile_picture %}
-                            <img src="{{ user.profile_picture.url }}" class="profilepic">
+                        {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" class="profilepic">
                         {% else %}
                             <img src="{% static 'drive/img/doggo.jpg' %}" class="profilepic">
                         {% endif %}
