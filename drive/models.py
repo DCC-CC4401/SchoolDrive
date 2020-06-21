@@ -31,7 +31,7 @@ class Carpeta(models.Model):
     nombre = models.CharField(max_length = 250)
     fecha_creacion = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) # a date
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    padres = models.ForeignKey('self', blank = True, null = True, related_name='sub_carpeta')
+    # padres = models.ForeignKey('self', blank = True, null = True, related_name='sub_carpeta')
 
 
 class Category(models.Model):
