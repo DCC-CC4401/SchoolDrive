@@ -16,7 +16,8 @@ import os
 #   The user can enter information and then send a POST request to add a task to the list
 #   This method has the main functionality of the project
 def index(request): #the index view
-
+    #folders = Carpeta.objects.all()
+    #todos = Task.objects.filter(owner=request.user)
     if request.method == 'GET':
         return render(request, "drive/index.html")
     if request.method == "POST": #checking if the request method is a POST
@@ -95,18 +96,13 @@ def view_profile(request):
 
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
-
-#Called with /files, only available for aunthenticated users and shows
-#   the user information displayed in the screen
 @login_required
 def view_files(request):
-    
+    files = Archivo.objects.all()
     if request.method == 'GET':
-        return render(request, "drive/datafiles.html")
-
+        return render(request, "drive/datafiles.html",{"files": files})
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
-
 #Called with /profile, only available por aunthenticated users and shows
 #   the user information displayed in the screen
 @login_required
@@ -120,8 +116,6 @@ def upload_file(request):
     
     if request.method == "POST": #checking if the request method is a POST
 
-        
-
         if request.FILES['Archivo']:
             Carpetas = Carpeta.objects.filter(usuario = request.user)
             archivo_nuevo = request.FILES['Archivo'] # archivo
@@ -129,18 +123,11 @@ def upload_file(request):
             nombre = archivo_nuevo.name
             formato = archivo_nuevo.name.split(".")[1]
             usuario = request.user
-
             archive = Archivo(nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
             archive.save()
             # Modifica valores
-            messages.success(request, 'Archivo subido!')
             return HttpResponseRedirect('/')
-        
+            messages.success(request, 'Archivo subido!')
         # editar avatar
-        
-        
-        
-
-
-    #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
+    #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
