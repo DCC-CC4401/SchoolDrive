@@ -19,7 +19,7 @@ class Archivo(models.Model):
     formato = models.CharField(max_length = 250)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    # carpeta = models.IntegerField()
+    carpeta = models.IntegerField(blank=False, null=False)
     
 
 #En la variable padres, la gracia es que cada carpeta tiene un padre, y los hijos no es necesario entregarlos
@@ -31,7 +31,7 @@ class Carpeta(models.Model):
     nombre = models.CharField(max_length = 250)
     fecha_creacion = models.DateField(default=timezone.now().strftime("%Y-%m-%d")) # a date
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    # padres = models.ForeignKey('self', blank = True, null = True, related_name='sub_carpeta')
+    padre = models.IntegerField(blank = True, null = True, default=None)
 
 
 class Category(models.Model):
