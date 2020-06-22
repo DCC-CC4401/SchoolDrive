@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -129,3 +130,6 @@ MESSAGE_TAGS = {
         messages.WARNING: 'alert-warning',
         messages.ERROR: 'alert-danger',
     }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'drive/media')
