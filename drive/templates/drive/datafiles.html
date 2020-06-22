@@ -3,16 +3,22 @@
 {% block title %} SchoolDrive | Perfil {% endblock %}
 
 {% block content %}
-<div class="container" style="margin-top:2em">
-        <!-- Archivos -->
-    <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-
-    <!-- <div class="container"> -->
-        
+    <div class="container" style="margin-top:2em">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <div class='alert {{message.tags}}'>
+                        {{message}}
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
         <div class="row">
+            
             <div class="col-md-3">
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
                 <div class="ibox float-e-margins">
-                    <form id="archivo" method="post" enctype="multipart/form-data">
+                    <form id="subir" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <h5>Subir Archivo</h5>
                         <div class="form-group">
@@ -59,17 +65,21 @@
                     <!-- </div> -->
                 </div>
             </div>
+
             <div class="col-md-9 animated fadeInRight">
-                <div class="row">
-                    <div class="col-lg-12">
-                        {% for file in files %}
-                        <div class="file-box">
-                            <div class="file">
-                                <a href="{{file.archivo.url}}">
+                <form id="eliminar" method="post" enctype="multipart/form-data">
+                    <button type="submit" name="deleteFiles" class="btn btn-danger" style="position: relative; margin-left: 90%;">Eliminar Seleccionados</button>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            
+                            {% for file in files %}
+                            <div class="file-box">
+                                <div class="file">
                                     <span class="corner"></span> 
-                                    <div class="icon">
+                                    <div class="icon contenedor">
                                         {%if file.formato in formatos_img%}
-                                            <img src="{{ file.archivo.url }}" style="height:100px">
+                                            <img class="imageicon" src="{{ file.archivo.url }}" style="height:100px">
                                         {%elif file.formato in formatos_vid%}
                                             <i class="img-responsive fa fa-film"></i>
                                         {%elif file.formato in formatos_msc%}
@@ -81,24 +91,29 @@
                                         {%else%}
                                             <i class="fa fa-file"></i>
                                         {%endif%}
+                                        <div class="texto-encima">
+                                            <input class="form-check-input" type="checkbox" name="{{file.carpeta.id}}/{{file.nombre}}.{{file.formato}}" id="{{file.nombre}}" style="margin-left:5px;">
+                                        </div>
                                     </div>
                                     <div class="file-name">
+                                        <a href="{{file.archivo.url}}">
                                         {{ file.nombre }}.{{ file.formato }}
+                                        </a>
                                         <br>
                                         <small>Added: {{ file.fecha_upload }}</small>
                                     </div>
-                                </a>
+                                </div>
                             </div>
+                            {% endfor %}
+                            
+                            {%if not files%}
+                                <h6 style="margin-top: 20%; text-align: center; color:lightgray">No hay archivos para mostrar 🙁</h6>
+                            {%endif%}
                         </div>
-                        {% endfor %}
-                        {%if not files%}
-                            <h6 style="margin-top: 20%; text-align: center; color:lightgray">No hay archivos para mostrar 🙁</h6>
-                        {%endif%}
                     </div>
-                </div>
-                </div>
+                </form>
             </div>
-        <!-- </div> -->
+        </div>
     </div> 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
