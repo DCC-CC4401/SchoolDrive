@@ -8,6 +8,8 @@ from .models import User, Archivo, Carpeta
 from datetime import *
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #El Index lo documente por ahora para el todolist, pero de ahi lo cambiamos, no lo quiero borrar porque a futuro
 #   puede ser util tenerlo.
 
@@ -69,8 +71,7 @@ def view_profile(request):
         usuario = request.user
 
         if 'profilepic' in request.POST: #Log In
-            BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-            MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+            
             if request.FILES['adjunto']:
                 old = usuario.avatar
                 usuario.avatar  = request.FILES['adjunto']
@@ -97,10 +98,19 @@ def view_profile(request):
 
 @login_required
 def view_files(request):
-    files = Archivo.objects.all()
+    files = Archivo.objects.filter(usuario=request.user)
     folders = Carpeta.objects.filter(usuario=request.user)
+    formatos_img = ['jpg','png','jepg','gif']
+    formatos_vid = ['mp4','avi','mepg']
+    formatos_msc = ['mp3','wma']
+    formatos_doc = ['txt','doc','docx','ots']
+    formatos_xcl = ['xlsx','xls','csv','tsv']
+
+    diccionario = {"files": files, "folders":folders, "formatos_img":formatos_img, 
+    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc}
+
     if request.method == 'GET':
-        return render(request, "drive/datafiles.html",{"files": files, "folders":folders})
+        return render(request, "drive/datafiles.html",diccionario)
 
     if request.method == "POST": #checking if the request method is a POST
 
