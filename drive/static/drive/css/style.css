@@ -201,3 +201,29 @@ text-decoration:none;
   border-color: lightgray;
   border-style: solid;
 }
+
+.imageicon {
+  object-fit: cover;
+  width: 120%;
+  height: 120%;
+  margin-top: -15px;
+  margin-left: -20px;
+}
+
+.contenedor{
+  position: relative;
+  /* display: inline-block; */
+  /* text-align: center; */
+}
+
+.texto-encima{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.profileicon {
+  object-fit: cover;
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+}
