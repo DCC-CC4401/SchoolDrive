@@ -6,21 +6,45 @@
 <div class="container" style="margin-top:2em">
         <!-- Archivos -->
     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-    
-    <div class="container">
+
+    <!-- <div class="container"> -->
         
         <div class="row">
             <div class="col-md-3">
                 <div class="ibox float-e-margins">
-                    <div class="ibox-content">
-                        <div class="file-manager">
-                            <h5>Show:</h5>
-                            <a href="#" class="file-control active">Ale</a>
+                    
+                    <!-- <div class="ibox-content"> -->
+                        <!-- <div class="file-manager"> -->
+                    <form id="archivo" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h5>Subir Archivo</h5>
+                        <div class="form-group">
+                            <label for="nombreArchivo" style="font-size: 14px;">Nombre Archivo:</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre" id="nombreArchivo" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <!-- <label for="exampleFormControlFile1">Subir Archivo</label> -->
+                            <input type="file" class="form-control-file" name="archivo" id="archivoSubido" style="width:100%" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carpetaArchivo" style="font-size: 14px;">Carpeta:</label>
+                            <select class="form-control form-control-sm" name="folder" id="carpetaArchivo" style="width:100%" required>
+                                {%for folder in folders%}
+                                    <option>{{folder.nombre}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="Upload_file" class="btn btn-primary" style="width: 100%;">Subir Archivo</button>
+                        </div>
+                    </form> 
+
+                            <!-- <a href="#" class="file-control active">Ale</a>
                             <a href="#" class="file-control">Documents</a>
                             <a href="#" class="file-control">Audio</a>
                             <a href="#" class="file-control">Images</a>
                             <div class="hr-line-dashed"></div>
-                            <button class="btn btn-primary btn-block">Upload Files</button>
+                            <button class="btn btn-primary btn-block">Upload Files</button> -->
                             <div class="hr-line-dashed"></div>
                             <h5>Folders</h5>
                             <ul class="folder-list" style="padding: 0">
@@ -43,8 +67,8 @@
                                 <li><a href="">Film</a></li>
                             </ul>
                             <div class="clearfix"></div>
-                        </div>
-                    </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
             <div class="col-md-9 animated fadeInRight">
@@ -416,7 +440,7 @@
                 </div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
     </div> 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

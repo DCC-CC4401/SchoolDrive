@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
 from .models import User, Archivo, Carpeta
-from .models import Task, Category
+#from .models import Task, Category
 from datetime import *
 import os
 
@@ -68,8 +68,6 @@ def view_profile(request):
     if request.method == "POST": #checking if the request method is a POST
         usuario = request.user
 
-        usuario = request.user
-        
         if 'profilepic' in request.POST: #Log In
             BASE_DIR = os.path.dirname(os.path.abspath(__file__))
             MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -96,13 +94,36 @@ def view_profile(request):
 
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
+
 @login_required
 def view_files(request):
     files = Archivo.objects.all()
+    folders = Carpeta.objects.filter(usuario=request.user)
     if request.method == 'GET':
-        return render(request, "drive/datafiles.html",{"files": files})
+        return render(request, "drive/datafiles.html",{"files": files, "folders":folders})
+
+    if request.method == "POST": #checking if the request method is a POST
+
+        if request.FILES['archivo']:
+            archivo = request.FILES['archivo'] # archivo
+            carpeta_name = request.POST['folder']  # seleccionar carpeta
+            nombre  = request.POST['nombre']
+            formato = archivo.name.split(".")[1]
+            usuario = request.user
+
+            carpeta = Carpeta.objects.get(usuario = usuario, nombre= carpeta_name)
+           
+            archivo.name = nombre + "." + formato
+            
+            archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
+            archive.save()
+            # Modifica valores
+            return HttpResponseRedirect('/files')
+            messages.success(request, 'Archivo subido!')
+        # editar avatar
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
+
 #Called with /profile, only available por aunthenticated users and shows
 #   the user information displayed in the screen
 @login_required

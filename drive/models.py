@@ -31,7 +31,7 @@ class Archivo(models.Model):
     formato = models.CharField(max_length = 250)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    carpeta = models.ForeignKey(Carpeta, blank=False, null=False, on_delete=models.CASCADE)
+    carpeta = models.ForeignKey(Carpeta, blank=False, null=True, on_delete=models.CASCADE)
 
 
 class Category(models.Model):
