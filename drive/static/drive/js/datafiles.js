@@ -2,7 +2,7 @@
 const form  = document.getElementById('subir');
 const nombrearchivo = document.getElementById('nombreArchivo');
 const nombrearchivospanError = document.getElementById('nombrearchivospanError');
-const archivo = document.getElementById('archivoSubido');
+const archivo = document.getElementById('archivo');
 const archivospanError = document.getElementById('archivospanError');
 var nombrearchivoregex = /[\\/:"*?<>\.|]+/;
 
