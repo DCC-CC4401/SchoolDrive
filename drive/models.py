@@ -26,12 +26,13 @@ class Carpeta(models.Model):
 class Archivo(models.Model):
     class Meta:
         unique_together = ['nombre', 'formato', 'usuario', 'carpeta'] 
-    archivo = models.FileField(upload_to='archivos/', blank=False, null=True)
+    
     nombre = models.CharField(max_length = 250)
     formato = models.CharField(max_length = 250)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    archivo = models.FileField(upload_to='archivos/', blank=False, null=True)
     fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
-    carpeta = models.ForeignKey(Carpeta, blank=False, null=False, on_delete=models.CASCADE)
+    carpeta = models.ForeignKey(Carpeta, blank=False, null=True, on_delete=models.CASCADE)
 
 
 class Category(models.Model):
