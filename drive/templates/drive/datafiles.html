@@ -48,6 +48,7 @@
                 </div>
             </div>
             <div class="col-md-9 animated fadeInRight">
+<<<<<<< Updated upstream
                 <div class="row">
                     <div class="col-lg-12">
                         {% for file in files %}
@@ -60,6 +61,38 @@
                                         <img src="{{ file.archivo.url }}" style="height:100px">
                                     </div>
                                     <div class="file-name">
+=======
+                <form id="eliminar" method="post" enctype="multipart/form-data">
+                    <button type="submit" name="deleteFiles" class="btn btn-danger" style="position: relative; margin-left: 90%;">Eliminar Seleccionados</button>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-12">
+                            
+                            {% for file in files %}
+                            <div class="file-box">
+                                <div class="file">
+                                    <span class="corner"></span> 
+                                    <div class="icon contenedor">
+                                        {%if file.formato in formatos_img%}
+                                            <img class="imageicon" src="{{ file.archivo.url }}" style="height:100px">
+                                        {%elif file.formato in formatos_vid%}
+                                            <i class="img-responsive fa fa-film"></i>
+                                        {%elif file.formato in formatos_msc%}
+                                            <i class="fa fa-music"></i>
+                                        {%elif file.formato in formatos_doc%}
+                                            <i class="fa fa-file"></i>
+                                        {%elif file.formato in formatos_xcl%}
+                                            <i class="fa fa-bar-chart-o"></i>
+                                        {%else%}
+                                            <i class="fa fa-file"></i>
+                                        {%endif%}
+                                        <div class="texto-encima">
+                                            <input class="form-check-input" type="checkbox" name="{{file.carpeta.id}}/{{file.nombre}}.{{file.formato}}" id="{{file.nombre}}" style="margin-left:5px;">
+                                        </div>
+                                    </div>
+                                    <div class="file-name">
+                                        <a target="_blank" href="{{file.archivo.url}}">
+>>>>>>> Stashed changes
                                         {{ file.nombre }}.{{ file.formato }}
                                         <br>
                                         <small>Added: {{ file.fecha_upload }}</small>
