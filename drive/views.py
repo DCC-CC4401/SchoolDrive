@@ -150,8 +150,8 @@ def view_files(request):
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
 
-#Called with /profile, only available por aunthenticated users and shows
-#   the user information displayed in the screen
+#Called inside /files, it is used to upload a file after selecting one from storage
+#   The file is uploaded
 @login_required
 def upload_file(request):
     
@@ -178,3 +178,22 @@ def upload_file(request):
         # editar avatar
     pass
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
+
+#Called inside /files, it is used to create a subfolder in the selected directory,
+@login_required
+def create_folder(request):
+
+    if request.method == 'GET':
+        return render(request, "drive/datafiles.html")
+
+    if request.method == 'POST':
+        usuario = request.user
+        nombre_carpeta = request.POST['Nombre Carpeta']
+#        carpeta_padre = Carpeta.objects.filter(usuario=request.user) #Descomentar si no funciona bien la carpeta_padre de abajo, son experimentos.
+        carpeta_padre = request.POST['Carpeta'] #Esto si la hacemos con carpeta actual
+        carpeta = Carpeta(nombre = nombre_carpeta, usuario = usuario, padre = carpeta_padre)
+        carpeta.save()
+        return HttpResponseRedirect('/')
+        messages.success(request, 'Carpeta creada!')
+
+    pass
