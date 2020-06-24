@@ -5,6 +5,7 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet"  href="{% static 'drive/css/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -31,26 +32,10 @@
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/" style="color: white;">Inicio <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/" style="color: white; "><i class="fa fa-home"></i> Inicio <span class="sr-only">(current)</span></a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile" style="color: white;">Editar Perfil</a>
-                </li>
-                
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/files" style="color: white;" >Mis Archivos</a>
+                    <a class="nav-link" href="/files" style="color: white;" > <i class="fa fa-folder-open-o"></i> Mis Archivos</a>
                 </li>
                 {% endif %}
             </ul>
@@ -88,7 +73,13 @@
                             {{ user.apodo }} <br>
                             {{ user.email }}
                         </div>
-                      <a class="dropdown-item" href="{% url 'logout' %}" type="button">Cerrar Sesión</a>
+                        <a class="dropdown-item" href="/profile">
+                            <i class="fa fa-cog"></i> Editar Perfil
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}" type="button">
+                            <i class="fa fa-power-off"></i> Cerrar Sesión
+                        </a>
                     </div> 
                 </div>
                 {% endif %}
