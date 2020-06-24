@@ -134,3 +134,5 @@ dmypy.json
 todolist
 todoapp
 drive/media/*
+drive/migrations/0011_auto_20200624_1306.py
+drive/migrations/0012_user_carpeta_raiz.py
