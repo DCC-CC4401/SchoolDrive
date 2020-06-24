@@ -4,7 +4,15 @@ const nombrearchivo = document.getElementById('nombreArchivo');
 const nombrearchivospanError = document.getElementById('nombrearchivospanError');
 const archivo = document.getElementById('archivo');
 const archivospanError = document.getElementById('archivospanError');
+const treeFolder = document.getElementById('treeFolder');
 var nombrearchivoregex = /[\\/:"*?<>\.|]+/;
+
+$(document).ready(function() {
+    $("#treeview").append($('#treeFolder').val())
+    $("#treeview").shieldTreeView();
+  });
+
+
 
 $(nombrearchivo).change( function (){
     if (!nombrearchivoregex.test($(nombrearchivo).val())){

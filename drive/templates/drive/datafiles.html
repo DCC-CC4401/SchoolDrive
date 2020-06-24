@@ -70,10 +70,13 @@
 
                     <div class="hr-line-dashed"></div>
                     <h5>Carpetas</h5>
-                    <ul class="folder-list" style="padding: 0">
+                    <!--ul class="folder-list" style="padding: 0">
                         {%for folder in folders%}
                             <li><a href="{{folder.id}}"><i class="fa fa-folder"></i>{{folder.nombre}}</a></li>
                         {%endfor%}
+                    </ul>-->
+                    <input style="display: none;" id="treeFolder" value="{{tree_folder}}">
+                    <ul id="treeview">
                     </ul>
                     <h5 class="tag-title">Tags</h5>
                     <p>Coming soon...</p>
@@ -146,6 +149,8 @@
     </div> 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 {% load static %}
 <script src="{% static 'drive/js/datafiles.js' %}"></script>
 {% endblock %}

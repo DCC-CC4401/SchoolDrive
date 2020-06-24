@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
+from django.utils.encoding import *
 from .models import User, Archivo, Carpeta
 from datetime import *
 import os
@@ -92,12 +93,27 @@ def view_profile(request):
         messages.success(request, 'Se modificaron tus datos!')
         return HttpResponseRedirect('/profile')
 
+def functiontest():
+    return "Hola"
+
+def tree_Folders(carpeta):
+    hijos = Carpeta.objects.filter(padre = carpeta)
+    html = ""
+    for hijo in hijos:
+        if (Carpeta.objects.filter(padre = hijo).count()>0):
+            html = html + '<li data-icon-cls="fa fa-folder"><a href='+str(hijo.id)+'>'+hijo.nombre+'</a><ul>'+tree_Folders(hijo)+'</ul></li>'
+        else:
+            html = html + '<li data-icon-cls="fa fa-folder"><a href='+str(hijo.id)+'>'+hijo.nombre+'</a></li>'
+    return html
+
 # Called with /files, only available por aunthenticated users and shows
 # the user files and folders
 @login_required
 def view_files(request, folderid):
 
     current_folder = Carpeta.objects.filter(id=folderid,usuario=request.user)[0]
+    tree_folder = tree_Folders(Carpeta.objects.filter(id=request.user.carpeta_raiz,usuario=request.user)[0])
+    html_carpetaraiz = '<li data-icon-cls="fa fa-folder active"><a href='+request.user.carpeta_raiz+'>'+"..."+'</a><ul>'+tree_folder+'</ul></li>'
     files = Archivo.objects.filter(usuario=request.user, carpeta=current_folder)
     folders = Carpeta.objects.filter(usuario=request.user)
     formatos_img = ['jpg','png','jepg','gif']
@@ -107,7 +123,7 @@ def view_files(request, folderid):
     formatos_xcl = ['xlsx','xls','csv','tsv']
 
     diccionario = {"files": files, "folders":folders, "formatos_img":formatos_img, 
-    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc}
+    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":html_carpetaraiz}
 
     if request.method == 'GET':
         return render(request, "drive/datafiles.html", diccionario)
