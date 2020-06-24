@@ -23,7 +23,7 @@
             <div class="col-md-3">
                 <h1>{{ user.first_name }} {{ user.last_name }}</h1>
                 <div class="ibox float-e-margins">
-                    <form id="subir" method="post" enctype="multipart/form-data" novalidate>
+                    <!-- <form id="subir" method="post" enctype="multipart/form-data" novalidate>
                         {% csrf_token %}
                         <h5>Subir Archivo</h5>
                         <div class="form-group">
@@ -47,26 +47,7 @@
                         <div class="form-group">
                             <button type="submit" name="Upload_file" class="btn btn-primary" style="width: 100%;">Subir Archivo</button>
                         </div>
-                    </form> 
-
-                    <!-- <form id="newFolderForm" method="post">
-                        {% csrf_token %}
-                        <div class="form-group">
-                            <label for="nombreCarpeta" style="font-size: 14px;">Nombre Carpeta:</label>
-                            <input type="text" class="form-control" name="newFolder" id="newFolder" placeholder="Nombre" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="carpeta" style="font-size: 14px;">Carpeta:</label>
-                            <select class="form-control" name="newOriginFolder" id="newOriginFolder" style="width:100%" required>
-                                {%for folder in folders%}
-                                    <option>{{folder.nombre}}</option>
-                                {%endfor%}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" name="new_folder" class="btn btn-primary" style="width: 100%;">New Folder</button>
-                        </div>
-                    </form> -->
+                    </form>  -->
 
                     <div class="hr-line-dashed"></div>
                     <h5>Carpetas</h5>
@@ -100,22 +81,111 @@
                 <form id="eliminar" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div>
-                        <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                            <i class="fa fa-folder-open-o"></i> Crear Carpeta
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#subirArchivo">
+                            <i class="fa fa-cloud-upload"></i> Subir Archivo
                         </button>
-                        <button type="submit" name="deleteFiles" class="btn btn-outline-danger">
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#crearCarpeta">
+                            <i class="fa fa-folder-o"></i> Crear Carpeta
+                        </button>
+                        <button type="submit" name="deleteFiles" class="btn btn-outline-danger" style="margin-left: 23%;">
                             <i class="fa fa-trash"></i> Eliminar Selección
                         </button>
-                        <div class="collapse form-inline" id="collapseExample">
-                            <input type="text" class="form-control" id="newFolder" name="newFolder" placeholder="Nombre Carpeta" style="width: 300px;" required>
-                            <button type="submit" class="btn btn-primary mb-2" style="margin-top: 8px;" name="new_folder">Crear</button>
-                            <input id="newOriginFolder" name="newOriginFolder" type="hidden" value="Raiz">
+                        <!-- Modal -->
+                        <div class="modal fade" id="crearCarpeta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Crear Carpeta</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="text" class="form-control" id="newFolder" name="newFolder" placeholder="Nombre Carpeta" style="width: 100%;">
+                                    <input id="newOriginFolder" name="newOriginFolder" type="hidden" value="{{current_folder.nombre}}">
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->
+                                    <button type="submit" class="btn btn-primary mb-2" style="width:25%" name="new_folder">Crear</button>
+                                </div>
+                            </div>
+                            </div>
                         </div>
+
+                        <div class="modal fade" id="subirArchivo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Subir Archivo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="nombreArchivo" style="font-size: 14px;">Nombre Archivo:</label>
+                                        <input type="text" class="form-control" name="nombre" id="nombreArchivo" placeholder="Nombre">
+                                        <span id="nombrearchivospanError" style="display: none;" >El nombre no puede contener ? * . " / \ [ ] ; | = ,</span>
+                                    </div>
+                                    <div class="custom-file" lang="es">
+                                        <input style="width:100%" type="file" class="custom-file-input" name="archivo" id="archivo">
+                                        <label class="custom-file-label" for="archivo">Elegir Archivo</label>
+                                        <span id="archivospanError" style="display: none;" >Debes seleccionar un archivo</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="carpetaArchivo" style="font-size: 14px;">Carpeta:</label>
+                                        <select class="form-control" name="folder" id="carpetaArchivo" style="width:100%" required>
+                                            {%for folder in folders%}
+                                                <option>{{folder.nombre}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->
+                                    <button type="submit" class="btn btn-primary mb-2" style="width:25%" name="Upload_file">Subir</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                            <i class="fa fa-folder-open-o"></i> Crear Carpeta
+                        </button> -->
+                        <!-- <div class="collapse form-inline" id="collapseExample">
+                            <input type="text" class="form-control" id="newFolder" name="newFolder" placeholder="Nombre Carpeta" style="width: 300px;">
+                            <button type="submit" class="btn btn-primary mb-2" style="margin-top: 8px;" name="new_folder">Crear</button>
+                            <input id="newOriginFolder" name="newOriginFolder" type="hidden" value="{{current_folder.nombre}}">
+                        </div> -->
                         
                     </div>
                     
                     <div class="row" style="margin-top: 40px;">
                         <div class="col-lg-12">
+
+                            {%for folder in folders%}
+                                {%if folder.padre.id|stringformat:"s" == current_folder.id|stringformat:"s"%}
+                                <!-- {{folder.padre.id}} {{current_folder.id}} -->
+                                <div class="file-box">
+                                    <div class="file">
+                                        <span class="corner"></span> 
+                                        <div class="icon contenedor">
+                                            <i class="fa fa-folder-o"></i>
+                                            <div class="texto-encima">
+                                                <input class="form-check-input" type="checkbox" name="{{folder.id}}" id="{{file.nombre}}" style="margin-left:5px;">
+                                            </div>
+                                        </div>
+                                        <div class="file-name">
+                                            <a href="{{folder.id}}">
+                                                {{folder.nombre}}
+                                            </a>
+                                            <br>
+                                            <small>Added: {{ folder.fecha_creacion }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                {%endif%}
+                            {%endfor%}
                             
                             {% for file in files %}
                             <div class="file-box">

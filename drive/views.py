@@ -113,7 +113,7 @@ def view_files(request, folderid):
 
     current_folder = Carpeta.objects.filter(id=folderid,usuario=request.user)[0]
     tree_folder = tree_Folders(Carpeta.objects.filter(id=request.user.carpeta_raiz,usuario=request.user)[0])
-    html_carpetaraiz = '<li data-icon-cls="fa fa-folder active"><a href='+request.user.carpeta_raiz+'>'+"..."+'</a><ul>'+tree_folder+'</ul></li>'
+    html_carpetaraiz = '<li data-icon-cls="fa fa-folder active"><a href='+request.user.carpeta_raiz+'>'+"Root"+'</a><ul>'+tree_folder+'</ul></li>'
     files = Archivo.objects.filter(usuario=request.user, carpeta=current_folder)
     folders = Carpeta.objects.filter(usuario=request.user)
     formatos_img = ['jpg','png','jepg','gif']
@@ -123,7 +123,7 @@ def view_files(request, folderid):
     formatos_xcl = ['xlsx','xls','csv','tsv']
 
     diccionario = {"files": files, "folders":folders, "formatos_img":formatos_img, 
-    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":html_carpetaraiz}
+    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":html_carpetaraiz, "current_folder":current_folder}
 
     if request.method == 'GET':
         return render(request, "drive/datafiles.html", diccionario)
@@ -150,19 +150,17 @@ def view_files(request, folderid):
             toDelete = []
             for element in request.POST:
                 toDelete.append(element)
-            toDelete = toDelete[2:] #Primeros 2 elementos no importan
+            toDelete = toDelete[4:] #Primeros 4 elementos no importan en este form
             filesToDelete = []
             for fileRoute in toDelete:
-                folder = fileRoute.split("/")[0]
-                rest   = fileRoute.split("/")[1]
-                f_name = rest.split(".")[0]
-                formato= rest.split(".")[1]
-                archivo = Archivo.objects.get(nombre=f_name,formato=formato,usuario=request.user,carpeta=folder)
-                archivo.delete()
-                os.remove(os.path.join(FILES_ROOT, f_name+"."+formato))
-                print(archivo.nombre+" borrado satisfactoriamente :)")
+                if "/" in fileRoute:
+                    borrarArchivo(fileRoute, request)
+                else:
+                    borrarCarpeta(fileRoute,request)
+
             messages.success(request, 'Archivos borrados!')
             return HttpResponseRedirect('/files/'+str(current_folder.id))
+
         elif "new_folder" in request.POST:
             usuario = request.user
             nombre_carpeta = request.POST['newFolder']
@@ -176,6 +174,31 @@ def view_files(request, folderid):
         # editar avatar
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
+
+
+def borrarArchivo(fileRoute, request):
+    print("Por borrar: "+fileRoute)
+    folder = fileRoute.split("/")[0]
+    rest   = fileRoute.split("/")[1]
+    f_name = rest.split(".")[0]
+    formato= rest.split(".")[1]
+    archivo = Archivo.objects.get(nombre=f_name,formato=formato,usuario=request.user,carpeta=folder)
+    archivo.delete()
+    os.remove(os.path.join(FILES_ROOT, f_name+"."+formato))
+    print(archivo.nombre+" borrado satisfactoriamente :)")
+
+def borrarCarpeta(fileRoute,request):
+    carpeta = Carpeta.objects.get(id=fileRoute, usuario=request.user)
+    archivosEnCarpeta = Archivo.objects.filter(usuario=request.user, carpeta=fileRoute)
+    for archivo in archivosEnCarpeta:
+        print("Borrando "+archivo.nombre+"."+archivo.formato)
+        archivo.delete()
+        os.remove(os.path.join(FILES_ROOT, archivo.nombre+"."+archivo.formato))
+    carpetasEnCarpeta = Carpeta.objects.filter(padre=carpeta)
+    for folder in carpetasEnCarpeta:
+        borrarCarpeta(folder.id,request)
+    carpeta.delete()
+
 
 #Called inside /files, it is used to upload a file after selecting one from storage
 #   The file is uploaded

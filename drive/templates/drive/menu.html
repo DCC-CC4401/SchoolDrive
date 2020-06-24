@@ -36,13 +36,10 @@
             <ul class="navbar-nav mr-auto">
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/" style="color: white; "><i class="fa fa-home"></i> Inicio <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/" style="color: white; "><i class="fa fa-home"></i> Inicio</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile" style="color: white;">Editar Perfil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/files/{{user.carpeta_raiz}}" style="color: white;" >Mis Archivos</a>
+                    <a class="nav-link" href="/files/{{user.carpeta_raiz}}" style="color: white;" ><i class="fa fa-folder-open-o"></i> Mis Archivos</a>
                 </li>
                 {% endif %}
             </ul>
