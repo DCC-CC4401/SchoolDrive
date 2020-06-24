@@ -95,7 +95,9 @@
 
             <div class="col-md-9 animated fadeInRight">
                 <form id="eliminar" method="post" enctype="multipart/form-data">
-                    <button type="submit" name="deleteFiles" class="btn btn-danger" style="position: relative; margin-left: 90%;">Eliminar Seleccionados</button>
+                    <button type="submit" name="deleteFiles" class="btn btn-danger" style="position: relative; margin-left: 100%;">
+                        <i class="fa fa-trash"></i> Eliminar
+                    </button>
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-12">
