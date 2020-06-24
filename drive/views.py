@@ -145,6 +145,19 @@ def view_files(request):
                 print(archivo.nombre+" borrado satisfactoriamente :)")
             messages.success(request, 'Archivos borrados!')
             return HttpResponseRedirect('/files')
+<<<<<<< Updated upstream
+=======
+            
+        elif "new_folder" in request.POST:
+            usuario = request.user
+            nombre_carpeta = request.POST['newFolder']
+            #carpeta_padre = Carpeta.objects.filter(usuario=request.user) #Descomentar si no funciona bien la carpeta_padre de abajo, son experimentos.
+            carpeta_padre = Carpeta.objects.filter(usuario=request.user, nombre=request.POST['newOriginFolder'] )[0]
+            carpeta = Carpeta(nombre = nombre_carpeta, usuario = usuario, padre = carpeta_padre)
+            carpeta.save()
+            messages.success(request, 'Carpeta creada!')
+            return HttpResponseRedirect('/files')
+>>>>>>> Stashed changes
 
         # editar avatar
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
