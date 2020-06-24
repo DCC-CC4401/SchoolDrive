@@ -75,6 +75,39 @@
                             <li><a href="{{folder.id}}"><i class="fa fa-folder"></i>{{folder.nombre}}</a></li>
                         {%endfor%}
                     </ul>
+                    <ul id="treeview">
+                        <li data-icon-cls="fa fa-inbox" data-expanded="true">Inbox
+                            <ul>
+                                <li><b>Today (2)</b></li>
+                                <li>Monday</li>
+                                <li>Last Week</li>
+                            </ul>
+                        </li>
+                        <li data-icon-cls="fa fa-trash">Trash
+                        </li>
+                        <li data-icon-cls="fa fa-calendar">Calendar
+                            <ul>
+                                <li>Day</li>
+                                <li>Week</li>
+                                <li>Month</li>
+                            </ul>
+                        </li>
+                        <li data-icon-cls="fa fa-user">Contacts
+                            <ul>
+                                <li>Alexander Stein</li>
+                                <li>John Doe</li>
+                                <li>Paul Smith</li>
+                                <li>Steward Lynn</li>
+                            </ul>
+                        </li>
+                        <li data-icon-cls="fa fa-folder">Folders
+                            <ul>
+                                <li>Backup</li>
+                                <li>Deleted</li>
+                                <li>Projects</li>
+                            </ul>
+                        </li>
+                    </ul>
                     <h5 class="tag-title">Tags</h5>
                     <p>Coming soon...</p>
                     <!-- <ul class="tag-list" style="padding: 0">
@@ -146,6 +179,8 @@
     </div> 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 {% load static %}
 <script src="{% static 'drive/js/datafiles.js' %}"></script>
 {% endblock %}

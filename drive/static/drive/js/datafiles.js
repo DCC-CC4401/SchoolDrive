@@ -6,6 +6,12 @@ const archivo = document.getElementById('archivo');
 const archivospanError = document.getElementById('archivospanError');
 var nombrearchivoregex = /[\\/:"*?<>\.|]+/;
 
+$(document).ready(function() {
+    $("#treeview").shieldTreeView();
+  });
+
+
+
 $(nombrearchivo).change( function (){
     if (!nombrearchivoregex.test($(nombrearchivo).val())){
         nombrearchivo.classList.remove("invalid");
