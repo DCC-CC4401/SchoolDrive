@@ -72,7 +72,7 @@
                     <h5>Carpetas</h5>
                     <ul class="folder-list" style="padding: 0">
                         {%for folder in folders%}
-                            <li><a href=""><i class="fa fa-folder"></i>{{folder.nombre}}-{{folder.padre.nombre}}</a></li>
+                            <li><a href="{{folder.id}}"><i class="fa fa-folder"></i>{{folder.nombre}}</a></li>
                         {%endfor%}
                     </ul>
                     <h5 class="tag-title">Tags</h5>
