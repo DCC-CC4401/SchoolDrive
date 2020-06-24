@@ -70,43 +70,13 @@
 
                     <div class="hr-line-dashed"></div>
                     <h5>Carpetas</h5>
-                    <ul class="folder-list" style="padding: 0">
+                    <!--ul class="folder-list" style="padding: 0">
                         {%for folder in folders%}
                             <li><a href="{{folder.id}}"><i class="fa fa-folder"></i>{{folder.nombre}}</a></li>
                         {%endfor%}
-                    </ul>
+                    </ul>-->
+                    <input style="display: none;" id="treeFolder" value="{{tree_folder}}">
                     <ul id="treeview">
-                        <li data-icon-cls="fa fa-inbox" data-expanded="true">Inbox
-                            <ul>
-                                <li><b>Today (2)</b></li>
-                                <li>Monday</li>
-                                <li>Last Week</li>
-                            </ul>
-                        </li>
-                        <li data-icon-cls="fa fa-trash">Trash
-                        </li>
-                        <li data-icon-cls="fa fa-calendar">Calendar
-                            <ul>
-                                <li>Day</li>
-                                <li>Week</li>
-                                <li>Month</li>
-                            </ul>
-                        </li>
-                        <li data-icon-cls="fa fa-user">Contacts
-                            <ul>
-                                <li>Alexander Stein</li>
-                                <li>John Doe</li>
-                                <li>Paul Smith</li>
-                                <li>Steward Lynn</li>
-                            </ul>
-                        </li>
-                        <li data-icon-cls="fa fa-folder">Folders
-                            <ul>
-                                <li>Backup</li>
-                                <li>Deleted</li>
-                                <li>Projects</li>
-                            </ul>
-                        </li>
                     </ul>
                     <h5 class="tag-title">Tags</h5>
                     <p>Coming soon...</p>
