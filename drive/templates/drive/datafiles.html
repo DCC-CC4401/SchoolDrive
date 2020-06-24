@@ -49,11 +49,30 @@
                         </div>
                     </form> 
 
+                    <form id="newFolderForm" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="nombreCarpeta" style="font-size: 14px;">Nombre Carpeta:</label>
+                            <input type="text" class="form-control" name="newFolder" id="newFolder" placeholder="Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="carpeta" style="font-size: 14px;">Carpeta:</label>
+                            <select class="form-control" name="newOriginFolder" id="newOriginFolder" style="width:100%" required>
+                                {%for folder in folders%}
+                                    <option>{{folder.nombre}}</option>
+                                {%endfor%}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" name="new_folder" class="btn btn-primary" style="width: 100%;">New Folder</button>
+                        </div>
+                    </form>
+
                     <div class="hr-line-dashed"></div>
                     <h5>Carpetas</h5>
                     <ul class="folder-list" style="padding: 0">
                         {%for folder in folders%}
-                            <li><a href=""><i class="fa fa-folder"></i>{{folder.nombre}}</a></li>
+                            <li><a href=""><i class="fa fa-folder"></i>{{folder.nombre}}-{{folder.padre.nombre}}</a></li>
                         {%endfor%}
                     </ul>
                     <h5 class="tag-title">Tags</h5>
