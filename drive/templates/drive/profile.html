@@ -31,9 +31,15 @@
                         {% endif %}
                     </div>
                     <div class="col">
-                        <label for="exampleFormControlFile1">Cambiar Foto:</label>
-                        <input name="adjunto" type="file" class="form-control-file" id="exampleFormControlFile1" style="margin-top: 10px;" required>
-                        <button type="submit" name="profilepic" class="btn btn-primary" style="margin-top: 40px; width: 100%;">Guardar Foto</button>
+                        <div class="custom-file" lang="es" style="margin-top: 30px;">
+                            <br>
+                            <label class="custom-file-label" for="archivo">Elegir Archivo</label>
+                            <input style="width:100%;" type="file" class="custom-file-input" name="adjunto" id="archivo" required>
+                            <span id="archivospanError" style="display: none;" >Debes seleccionar un archivo</span>
+                        </div>
+                        <!-- <label for="exampleFormControlFile1">Cambiar Foto:</label>
+                        <input name="adjunto" type="file" class="form-control-file" id="exampleFormControlFile1" style="margin-top: 10px;" required> -->
+                        <button type="submit" name="profilepic" class="btn btn-primary" style="margin-top: 30px; width: 100%;">Guardar Foto</button>
                     </div>
                 </div> 
             </form>

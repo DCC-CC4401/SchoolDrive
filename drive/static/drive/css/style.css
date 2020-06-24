@@ -227,3 +227,8 @@ text-decoration:none;
   height: 30px;
   border-radius: 100%;
 }
+
+@font-face {
+  font-family: sunny;
+  src: url(../fonts/SunnyCloudy-One.ttf);
+}
