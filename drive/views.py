@@ -113,6 +113,7 @@ def view_files(request, folderid):
 
     current_folder = Carpeta.objects.filter(id=folderid,usuario=request.user)[0]
     tree_folder = tree_Folders(Carpeta.objects.filter(id=request.user.carpeta_raiz,usuario=request.user)[0])
+    html_carpetaraiz = '<li data-icon-cls="fa fa-folder active"><a href='+request.user.carpeta_raiz+'>'+"..."+'</a><ul>'+tree_folder+'</ul></li>'
     files = Archivo.objects.filter(usuario=request.user, carpeta=current_folder)
     folders = Carpeta.objects.filter(usuario=request.user)
     formatos_img = ['jpg','png','jepg','gif']
@@ -122,7 +123,7 @@ def view_files(request, folderid):
     formatos_xcl = ['xlsx','xls','csv','tsv']
 
     diccionario = {"files": files, "folders":folders, "formatos_img":formatos_img, 
-    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":tree_folder}
+    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":html_carpetaraiz}
 
     if request.method == 'GET':
         return render(request, "drive/datafiles.html", diccionario)
