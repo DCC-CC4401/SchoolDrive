@@ -42,11 +42,12 @@ def index(request): # the index view
             apodo = request.POST['apodo']
             mail = request.POST['mail']
             if not User.objects.filter(username=mail).exists():
-                user = User.objects.create_user(username=mail, password=contraseña,email=mail,apodo=apodo, 
-                first_name= nombre, last_name=apellido)
-                carpeta_raiz = Carpeta(nombre = 'Raiz', usuario = user)
-                carpeta_raiz.save()
-                messages.success(request, 'Se creó el usuario para ' + user.apodo + '! (carpeta '+carpeta_raiz.nombre+' creada)')
+                user = User.objects.create_user(username=mail, password=contraseña,email=mail,apodo=apodo, first_name= nombre, last_name=apellido)
+                new_carpeta_raiz = Carpeta(nombre = 'Raiz', usuario = user)
+                user.carpeta_raiz = new_carpeta_raiz.id
+                user.save()
+                new_carpeta_raiz.save()
+                messages.success(request, 'Se creó el usuario para ' + user.apodo + '! (carpeta '+new_carpeta_raiz.nombre+' creada)')
             else:
                 messages.error(request, 'Ya existe un usuario con ese email. Intenta iniciando sesión con tu email y contraseña.')
                 return HttpResponseRedirect('/')
@@ -94,9 +95,10 @@ def view_profile(request):
 # Called with /files, only available por aunthenticated users and shows
 # the user files and folders
 @login_required
-def view_files(request):
+def view_files(request, folderid):
 
-    files = Archivo.objects.filter(usuario=request.user)
+    current_folder = Carpeta.objects.filter(id=folderid,usuario=request.user)[0]
+    files = Archivo.objects.filter(usuario=request.user, carpeta=current_folder)
     folders = Carpeta.objects.filter(usuario=request.user)
     formatos_img = ['jpg','png','jepg','gif']
     formatos_vid = ['mp4','avi','mepg']
@@ -125,7 +127,7 @@ def view_files(request):
             archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
             archive.save()
             # Modifica valores
-            return HttpResponseRedirect('/files')
+            return HttpResponseRedirect('/files/'+str(current_folder.id))
             messages.success(request, 'Archivo subido!')
         
         elif 'deleteFiles' in request.POST:
@@ -144,10 +146,7 @@ def view_files(request):
                 os.remove(os.path.join(FILES_ROOT, f_name+"."+formato))
                 print(archivo.nombre+" borrado satisfactoriamente :)")
             messages.success(request, 'Archivos borrados!')
-            return HttpResponseRedirect('/files')
-<<<<<<< Updated upstream
-=======
-            
+            return HttpResponseRedirect('/files/'+str(current_folder.id))
         elif "new_folder" in request.POST:
             usuario = request.user
             nombre_carpeta = request.POST['newFolder']
@@ -156,15 +155,14 @@ def view_files(request):
             carpeta = Carpeta(nombre = nombre_carpeta, usuario = usuario, padre = carpeta_padre)
             carpeta.save()
             messages.success(request, 'Carpeta creada!')
-            return HttpResponseRedirect('/files')
->>>>>>> Stashed changes
+            return HttpResponseRedirect('/files/'+str(current_folder.id))
 
         # editar avatar
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
 
-#Called with /profile, only available por aunthenticated users and shows
-#   the user information displayed in the screen
+#Called inside /files, it is used to upload a file after selecting one from storage
+#   The file is uploaded
 @login_required
 def upload_file(request):
     
@@ -176,18 +174,35 @@ def upload_file(request):
     
     if request.method == "POST": #checking if the request method is a POST
 
-        if request.FILES['Archivo']:
-            Carpetas = Carpeta.objects.filter(usuario = request.user)
-            archivo_nuevo = request.FILES['Archivo'] # archivo
-            carpeta = request.POST['Carpeta']  # seleccionar carpeta
-            nombre = archivo_nuevo.name
-            formato = archivo_nuevo.name.split(".")[1]
-            usuario = request.user
-            archive = Archivo(nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
-            archive.save()
-            # Modifica valores
-            return HttpResponseRedirect('/')
-            messages.success(request, 'Archivo subido!')
-        # editar avatar
+        Carpetas = Carpeta.objects.filter(usuario = request.user)
+        archivo_nuevo = request.FILES['Archivo'] # archivo
+        carpeta = request.POST['Carpeta']  # seleccionar carpeta
+        nombre = archivo_nuevo.name
+        formato = archivo_nuevo.name.split(".")[1]
+        usuario = request.user
+        archive = Archivo(nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
+        archive.save()
+        # Modifica valores
+        return HttpResponseRedirect('/')
+        messages.success(request, 'Archivo subido!')
     pass
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
+
+#Called inside /files, it is used to create a subfolder in the selected directory,
+#@login_required
+#def create_folder(request):
+#
+#    if request.method == 'GET':
+#        return render(request, "drive/datafiles.html")
+#
+#    if request.method == 'POST':
+#       usuario = request.user
+ #       nombre_carpeta = request.POST['NombreCarpeta']
+#        carpeta_padre = Carpeta.objects.filter(usuario=request.user) #Descomentar si no funciona bien la carpeta_padre de abajo, son experimentos.
+#        carpeta_padre = request.POST['Carpeta'] #Esto si la hacemos con carpeta actual
+ #       carpeta = Carpeta(nombre = nombre_carpeta, usuario = usuario, padre = carpeta_padre)
+#        carpeta.save()
+#       return HttpResponseRedirect('/')
+ #       messages.success(request, 'Carpeta creada!')
+#
+ #   pass

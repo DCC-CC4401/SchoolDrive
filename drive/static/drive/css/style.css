@@ -7,6 +7,11 @@ input.invalid {
     font-size:10pt;
     color: red;
 }
+.custom-file span {
+  display: none;
+  font-size:10pt;
+  color: red;
+}
 
 .file-box {
   float: left;
