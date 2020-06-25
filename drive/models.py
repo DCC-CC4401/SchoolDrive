@@ -2,6 +2,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
+from taggit.managers import TaggableManager
 import uuid
 
 
@@ -38,6 +39,7 @@ class Archivo(models.Model):
     archivo = models.FileField(upload_to='archivos/', blank=False, null=True)
     fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     carpeta = models.ForeignKey(Carpeta, blank=False, null=True, on_delete=models.CASCADE)
+    tags = TaggableManager()
 
 
 class Category(models.Model):

@@ -162,7 +162,7 @@
                             {%for folder in folders%}
                                 {%if folder.padre.id|stringformat:"s" == current_folder.id|stringformat:"s"%}
                                 <!-- {{folder.padre.id}} {{current_folder.id}} -->
-                                <div class="file-box">
+                                <div ondblclick="window.location.href='{{folder.id}}'" class="file-box">
                                     <div class="file">
                                         <span class="corner"></span> 
                                         <div class="icon contenedor">
@@ -172,7 +172,7 @@
                                             </div>
                                         </div>
                                         <div class="file-name">
-                                            <a href="{{folder.id}}">
+                                            <a>
                                                 {{folder.nombre}}
                                             </a>
                                             <br>
