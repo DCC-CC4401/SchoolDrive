@@ -122,14 +122,17 @@ def view_files(request, folderid):
     formatos_doc = ['txt','doc','docx','ots']
     formatos_xcl = ['xlsx','xls','csv','tsv']
 
+    rutaList = [ele for ele in reversed(getRuta(current_folder,[]))] 
+
     diccionario = {"files": files, "folders":folders, "formatos_img":formatos_img, 
-    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":html_carpetaraiz, "current_folder":current_folder}
+    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":html_carpetaraiz, 
+    "current_folder":current_folder, "ruta_list":rutaList}
 
     if request.method == 'GET':
         return render(request, "drive/datafiles.html", diccionario)
 
     if request.method == "POST": #checking if the request method is a POST
-        if 'Upload_file' in request.POST and  request.FILES['archivo']:
+        if 'archivo-nuevo' in request.POST and  request.FILES['archivo']:
             archivo = request.FILES['archivo'] # archivo
             carpeta_name = request.POST['folder']  # seleccionar carpeta
             nombre  = request.POST['nombre']
@@ -150,10 +153,10 @@ def view_files(request, folderid):
             toDelete = []
             for element in request.POST:
                 toDelete.append(element)
-            toDelete = toDelete[7:] #Primeros 4 elementos no importan en este form
+            toDelete = toDelete[2:] #Primeros 4 elementos no importan en este form
             filesToDelete = []
             for fileRoute in toDelete:
-                #print("aborrars " + fileRoute)
+                print("aborrars " + fileRoute)
                 if "/" in fileRoute:
                     borrarArchivo(fileRoute, request)
                 else:
@@ -162,7 +165,7 @@ def view_files(request, folderid):
             messages.success(request, 'Archivos borrados!')
             return HttpResponseRedirect('/files/'+str(current_folder.id))
 
-        elif "new_folder" in request.POST:
+        elif "nueva-carpeta" in request.POST:
             usuario = request.user
             nombre_carpeta = request.POST['newFolder']
             #carpeta_padre = Carpeta.objects.filter(usuario=request.user) #Descomentar si no funciona bien la carpeta_padre de abajo, son experimentos.
@@ -175,6 +178,13 @@ def view_files(request, folderid):
         # editar avatar
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
     pass
+
+def getRuta(current, listaRuta=[]):
+    listaRuta.append(current)
+    if current.padre!=None:
+        return getRuta(current.padre,listaRuta)
+    return listaRuta
+    
 
 
 def borrarArchivo(fileRoute, request):

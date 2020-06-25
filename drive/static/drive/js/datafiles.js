@@ -1,5 +1,5 @@
 //VARIABLES FORMULARIO
-const form  = document.getElementById('eliminar');
+const form  = document.getElementById('archivo-nuevo');
 const nombrearchivo = document.getElementById('nombreArchivo');
 const nombrearchivospanError = document.getElementById('nombrearchivospanError');
 const archivo = document.getElementById('archivo');
