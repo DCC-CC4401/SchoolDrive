@@ -150,9 +150,10 @@ def view_files(request, folderid):
             toDelete = []
             for element in request.POST:
                 toDelete.append(element)
-            toDelete = toDelete[4:] #Primeros 4 elementos no importan en este form
+            toDelete = toDelete[7:] #Primeros 4 elementos no importan en este form
             filesToDelete = []
             for fileRoute in toDelete:
+                #print("aborrars " + fileRoute)
                 if "/" in fileRoute:
                     borrarArchivo(fileRoute, request)
                 else:
