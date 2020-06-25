@@ -144,6 +144,11 @@ def view_files(request, folderid):
             archivo.name = nombre + "." + formato
             
             archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
+
+            tags = request.POST.get('tag')  # Aceptamos separados por coma
+            tags: List[str] = [str(r) for r in tags.split(',')]  # Aqui lo convertimos a lista de tags
+            archive.tags = tags  # Los asociamos al objeto y despues guardamos
+
             archive.save()
             # Modifica valores
             return HttpResponseRedirect('/files/'+str(current_folder.id))
