@@ -126,9 +126,17 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->
-                                        <button type="submit" class="btn btn-primary mb-2" style="width:25%" name="archivo-nuevo">Subir</button>
+                                    <div class="form-group">
+                                        <label for="carpetaArchivo" style="font-size: 14px;">Carpeta:</label>
+                                        <select class="form-control" name="folder" id="carpetaArchivo" style="width:100%">
+                                            {%for folder in folders%}
+                                                {%if folder.id|stringformat:"s" == current_folder.id|stringformat:"s"%}
+                                                    <option selected>{{folder.nombre}}</option>
+                                                {%else%}
+                                                    <option>{{folder.nombre}}</option>
+                                                {%endif%}
+                                            {%endfor%}
+                                        </select>
                                     </div>
                                 </div>
                             </div>

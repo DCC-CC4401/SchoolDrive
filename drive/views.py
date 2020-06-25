@@ -9,7 +9,7 @@ from datetime import *
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-AVATAR_ROOT = os.path.join(BASE_DIR, 'media/avatars')
+AVATAR_ROOT = os.path.join(BASE_DIR, 'media')
 FILES_ROOT  = os.path.join(BASE_DIR, 'media/archivos')
 # El Index lo documente por ahora para el todolist, pero de ahi lo cambiamos, no lo quiero borrar porque a futuro
 # puede ser util tenerlo.
@@ -77,7 +77,7 @@ def view_profile(request):
                 old = usuario.avatar
                 usuario.avatar  = request.FILES['adjunto']
                 usuario.avatar.name = usuario.first_name + "##" + usuario.last_name + "##" + str(datetime.now()) +".png"
-                if old != None:
+                if str(old) != '':
                     os.remove(os.path.join(AVATAR_ROOT, old.name))
 
         else: # Edit Info
