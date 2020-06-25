@@ -101,9 +101,9 @@ def tree_Folders(carpeta):
     html = ""
     for hijo in hijos:
         if (Carpeta.objects.filter(padre = hijo).count()>0):
-            html = html + '<li data-icon-cls="fa fa-folder"><a href='+str(hijo.id)+'>'+hijo.nombre+'</a><ul>'+tree_Folders(hijo)+'</ul></li>'
+            html = html + '<li id="'+str(hijo.id)+'" data-icon-cls="fa fa-folder"><a href='+str(hijo.id)+'>'+hijo.nombre+'</a><ul>'+tree_Folders(hijo)+'</ul></li>'
         else:
-            html = html + '<li data-icon-cls="fa fa-folder"><a href='+str(hijo.id)+'>'+hijo.nombre+'</a></li>'
+            html = html + '<li id="'+str(hijo.id)+'" data-icon-cls="fa fa-folder"><a href='+str(hijo.id)+'>'+hijo.nombre+'</a></li>'
     return html
 
 # Called with /files, only available por aunthenticated users and shows
@@ -113,7 +113,7 @@ def view_files(request, folderid):
 
     current_folder = Carpeta.objects.filter(id=folderid,usuario=request.user)[0]
     tree_folder = tree_Folders(Carpeta.objects.filter(id=request.user.carpeta_raiz,usuario=request.user)[0])
-    html_carpetaraiz = '<li data-icon-cls="fa fa-folder active"><a href='+request.user.carpeta_raiz+'>'+"Root"+'</a><ul>'+tree_folder+'</ul></li>'
+    html_carpetaraiz = '<li id="'+request.user.carpeta_raiz+'" data-icon-cls="fa fa-folder active"><a href='+request.user.carpeta_raiz+'>'+"Root"+'</a><ul>'+tree_folder+'</ul></li>'
     files = Archivo.objects.filter(usuario=request.user, carpeta=current_folder)
     folders = Carpeta.objects.filter(usuario=request.user)
     formatos_img = ['jpg','png','jepg','gif']
