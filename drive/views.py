@@ -147,7 +147,7 @@ def view_files(request, folderid):
             
             archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
 
-            tags = request.POST.get('tag')  # Aceptamos separados por coma
+            tags = request.POST.get('tagsNewFileVal')  # Aceptamos separados por coma
             if (tags != None):
                 tags: List[str] = [str(r) for r in tags.split(',')]  # Aqui lo convertimos a lista de tags
                 archive.tags = tags  # Los asociamos al objeto y despues guardamos

@@ -14,9 +14,24 @@ $(document).ready(function() {
     treeview.expanded(true, [0,0]);
     console.log($("#"+$(currentFolder).val()))
     console.log(treeview.getPath($("#"+$(currentFolder).val())));
+
+
+
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
   });
 
+  $(function(){
 
+    $('#tagsNewFile').tagInput({
+        labelClass:"badge badge-primary"
+      });
+  
+  });
 
 $(nombrearchivo).change( function (){
     if (!nombrearchivoregex.test($(nombrearchivo).val())){
