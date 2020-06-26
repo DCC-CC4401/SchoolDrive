@@ -20,6 +20,11 @@ $(nombreusuario).change( function (){
     }
 })
 
+$(".custom-file-input").on("change", function() {
+    var fileName = $(this).val().split("\\").pop();
+    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
 function nombreError() {
     nombreusuario.classList += " invalid";
     nombrespanError.style.display = "block";
