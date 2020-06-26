@@ -147,7 +147,8 @@ def view_files(request, folderid):
            
             archivo.name = nombre + "." + formato
             
-            archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta, tagstest=tags)
+            archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
+            archive.save()
             archive.tags = tags
             
 
