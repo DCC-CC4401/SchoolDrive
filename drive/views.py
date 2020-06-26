@@ -8,6 +8,7 @@ from django.shortcuts import render,redirect
 from django.utils.encoding import *
 from .models import User, Archivo, Carpeta
 from datetime import *
+from taggit.managers import TaggableManager
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -140,17 +141,19 @@ def view_files(request, folderid):
             nombre  = request.POST['nombre']
             formato = archivo.name.split(".")[1]
             usuario = request.user
+            tags = request.POST.get('tagsNewFileVal')  # Aceptamos separados por coma
 
             carpeta = Carpeta.objects.get(usuario = usuario, nombre= carpeta_name)
            
             archivo.name = nombre + "." + formato
             
-            archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
+            archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta, tagstest=tags)
+            archive.tags = tags
+            
 
-            tags = request.POST.get('tagsNewFileVal')  # Aceptamos separados por coma
-            if (tags != None):
-                tags: List[str] = [str(r) for r in tags.split(',')]  # Aqui lo convertimos a lista de tags
-                archive.tags = tags  # Los asociamos al objeto y despues guardamos
+            #if (tags != None):
+             #   tags: List[str] = [str(r) for r in tags.split(',')]  # Aqui lo convertimos a lista de tags
+              #  archive.tags = tags  # Los asociamos al objeto y despues guardamos
 
             archive.save()
             # Modifica valores

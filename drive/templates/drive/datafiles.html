@@ -118,7 +118,7 @@
                                             <label for="tagsNewFile">Etiquetas Archivo:</label>
                                             <div class="form-control tags" id="tagsNewFile">
                                                 <input type="text" class="labelinput">
-                                                <input type="hidden" value="" name="tagsNewFileVal">
+                                                <input type="hidden" value="" name="tagsNewFileVal" id="tagsNewFileVal">
                                             </div>
                                         </div>
 
@@ -203,7 +203,7 @@
                                     </div>
                                     <div class="file-name">
                                         <a >
-                                        {{ file.nombre }}.{{ file.formato }}
+                                        {{ file.nombre }}.{{ file.formato }}-{{file.tags.all}}
                                         </a>
                                         <br>
                                         <small>Added: {{ file.fecha_upload }}</small>
