@@ -40,7 +40,6 @@ class Archivo(models.Model):
     fecha_upload = models.DateField(default=timezone.now().strftime("%Y-%m-%d"))
     carpeta = models.ForeignKey(Carpeta, blank=False, null=True, on_delete=models.CASCADE)
     tags = TaggableManager()
-    tagstest = models.CharField(max_length = 250, null=True)
 
 
 class Category(models.Model):
