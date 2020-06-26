@@ -147,14 +147,15 @@ def view_files(request, folderid):
            
             archivo.name = nombre + "." + formato
             
-            archive = Archivo(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
-            archive.save()
-            archive.tags = tags
+            archive = Archivo.objects.create(archivo=archivo, nombre = nombre, formato = formato, usuario = usuario, carpeta = carpeta)
+            #archive.tags.add(tags)
             
 
-            #if (tags != None):
-             #   tags: List[str] = [str(r) for r in tags.split(',')]  # Aqui lo convertimos a lista de tags
-              #  archive.tags = tags  # Los asociamos al objeto y despues guardamos
+            if (tags != None):
+                tags: List[str] = [str(r) for r in tags.split(',')]  # Aqui lo convertimos a lista de tags
+                for i in tags:
+                    archive.tags.add(i)
+                #archive.tags = tags  # Los asociamos al objeto y despues guardamos
 
             archive.save()
             # Modifica valores
