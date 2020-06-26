@@ -2,6 +2,10 @@ input.invalid {
     border: 2px solid red;
   }
 
+.custom-file-input ~ .custom-file-label::after {
+    content: "Examinar";
+}
+
 .form-group span {
     display: none;
     font-size:10pt;
