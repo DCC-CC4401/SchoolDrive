@@ -5,14 +5,33 @@ const nombrearchivospanError = document.getElementById('nombrearchivospanError')
 const archivo = document.getElementById('archivo');
 const archivospanError = document.getElementById('archivospanError');
 const treeFolder = document.getElementById('treeFolder');
+const currentFolder = document.getElementById('currentFolder');
 var nombrearchivoregex = /[\\/:"*?<>\.|]+/;
 
 $(document).ready(function() {
     $("#treeview").append($('#treeFolder').val())
-    $("#treeview").shieldTreeView();
+    var treeview = $("#treeview").shieldTreeView().swidget();
+    treeview.expanded(true, [0,0]);
+    console.log($("#"+$(currentFolder).val()))
+    console.log(treeview.getPath($("#"+$(currentFolder).val())));
+
+
+
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
   });
 
+  $(function(){
 
+    $('#tagsNewFile').tagInput({
+        labelClass:"badge badge-primary"
+      });
+  
+  });
 
 $(nombrearchivo).change( function (){
     if (!nombrearchivoregex.test($(nombrearchivo).val())){

@@ -36,6 +36,7 @@
                         {%endfor%}
                     </ul>-->
                     <input style="display: none;" id="treeFolder" value="{{tree_folder}}">
+                    <input style="display: none;" id="currentFolder" value="{{current_folder.id}}">
                     <ul id="treeview">
                     </ul>
                     <h5 class="tag-title">Tags</h5>
@@ -113,6 +114,14 @@
                                             <label class="custom-file-label" for="archivo">Elegir Archivo</label>
                                             <span id="archivospanError" style="display: none;" >Debes seleccionar un archivo</span>
                                         </div>
+                                        <div style="margin-top: 10px;">
+                                            <label for="tagsNewFile">Etiquetas Archivo:</label>
+                                            <div class="form-control tags" id="tagsNewFile">
+                                                <input type="text" class="labelinput">
+                                                <input type="hidden" value="" name="tagsNewFileVal">
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="carpetaArchivo" style="font-size: 14px;">Carpeta:</label>
                                             <select class="form-control" name="folder" id="carpetaArchivo" style="width:100%" required>
@@ -171,7 +180,7 @@
                             {%endfor%}
                             
                             {% for file in files %}
-                            <div class="file-box">
+                            <div ondblclick="window.open('{{file.archivo.url}}','_newtab');" class="file-box">
                                 <div class="file">
                                     <span class="corner"></span> 
                                     <div class="icon contenedor">
@@ -193,7 +202,7 @@
                                         </div>
                                     </div>
                                     <div class="file-name">
-                                        <a target="_blank" href="{{file.archivo.url}}">
+                                        <a >
                                         {{ file.nombre }}.{{ file.formato }}
                                         </a>
                                         <br>
@@ -216,6 +225,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+{% load static %}
+<script src="{% static 'drive/js/tagInput.js' %}"></script>
 {% load static %}
 <script src="{% static 'drive/js/datafiles.js' %}"></script>
 {% endblock %}
