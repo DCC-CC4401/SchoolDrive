@@ -203,7 +203,10 @@
                                     </div>
                                     <div class="file-name">
                                         <a >
-                                        {{ file.nombre }}.{{ file.formato }}-{{file.tags.all}}
+                                        {{ file.nombre }}.{{ file.formato }}
+                                        {% for tag in file.tags.names %}
+                                            {{tag}}-
+                                        {%endfor%}
                                         </a>
                                         <br>
                                         <small>Added: {{ file.fecha_upload }}</small>
