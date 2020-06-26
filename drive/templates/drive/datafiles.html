@@ -205,7 +205,7 @@
                                         <a >
                                         {{ file.nombre }}.{{ file.formato }}
                                         {% for tag in file.tags.names %}
-                                            {{tag}}-
+                                            <a class="mr-1 badge badge-info">{{ tag }}</a>
                                         {%endfor%}
                                         </a>
                                         <br>
