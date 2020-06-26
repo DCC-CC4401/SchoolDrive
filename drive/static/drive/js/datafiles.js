@@ -12,8 +12,6 @@ $(document).ready(function() {
     $("#treeview").append($('#treeFolder').val())
     var treeview = $("#treeview").shieldTreeView().swidget();
     treeview.expanded(true, [0,0]);
-    console.log($("#"+$(currentFolder).val()))
-    console.log(treeview.getPath($("#"+$(currentFolder).val())));
 
 
 
@@ -65,6 +63,7 @@ function archivoError() {
 };
 
 form.addEventListener('submit', function (event){
+    console.log($('#tagsNewFileVal').val())
     var count = 0;
     if (nombrearchivoregex.test($(nombrearchivo).val()) && $(nombrearchivo).val()!=""){
         nombrearchivoError();
