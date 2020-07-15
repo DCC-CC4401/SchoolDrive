@@ -3,6 +3,7 @@ from typing import List
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
 from django.utils.encoding import *
@@ -159,8 +160,9 @@ def view_files(request, folderid):
 
             archive.save()
             # Modifica valores
-            return HttpResponseRedirect('/files/'+str(current_folder.id))
             messages.success(request, 'Archivo subido!')
+            return HttpResponseRedirect('/files/'+str(current_folder.id))
+
         
         elif 'deleteFiles' in request.POST:
             toDelete = []
@@ -187,6 +189,29 @@ def view_files(request, folderid):
             carpeta.save()
             messages.success(request, 'Carpeta creada!')
             return HttpResponseRedirect('/files/'+str(current_folder.id))
+
+
+        #https://stackoverflow.com/questions/42603188/django-taggit-searching-for-posts-when-all-tags-and-title-are-contained-in-the-d
+        elif "searchInProfile" in request.POST:
+            #tagsToSearch = request.POST['tags']
+            #usuario = request.user
+            queryInput = request.GET.get('q', None) #Si no funciona tratar con request.POST('tagList')
+            searchQuery = queryInput.lower().split()
+
+            lookups = Q()
+            if(len(searchQuery) >= 1):
+                for word in searchQuery:
+                    lookups = lookups | Q(tags__name__icontains = word)
+
+            results = Archivo.objects.filter(lookups) #.distinct() #Si queremos que discrmine mayuscula y minuscula
+
+            #En results deberia estar lo que nos interesa, no se como mostrarla sin renderizar una pagina nueva
+
+            messages.success(request, 'Busqueda finalizada')
+            return HttpResponseRedirect('/files/' + str(current_folder.id))
+
+
+
 
         # editar avatar
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
