@@ -241,3 +241,38 @@ text-decoration:none;
   font-family: sunny;
   src: url(../fonts/SunnyCloudy-One.ttf);
 }
+
+.profilepicSearch {
+  object-fit: cover;
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+}
+
+.search-box {
+  float: left;
+  width: 200px;
+  height: 200px;
+  align-content: center;
+  text-align: center;
+}
+
+.searchbar {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.searchbutton{
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.search-container {
+  margin-top: 20px;
+}
+
+.element-search{
+  color:#A96CEB;
+}

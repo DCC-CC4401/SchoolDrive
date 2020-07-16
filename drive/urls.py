@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='home_page'),
+    #path('search', views.search, name='search'),
     path('logout',views.logout_user, name='logout'),
     path('profile', views.view_profile, name='profile'),
     path('files/<slug:folderid>', views.view_files, name='files')

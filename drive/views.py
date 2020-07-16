@@ -22,9 +22,14 @@ FILES_ROOT  = os.path.join(BASE_DIR, 'media/archivos')
 # user is authenticated or not.
 # The user can enter information and then send a POST request to add a task to the list
 def index(request): # the index view
-    
+    diccionario = {}
+    diccionario['busqueda'] = False
+    diccionario['search_users'] = False
+    diccionario['search_files'] = False
+    diccionario['search_tags'] = False
+
     if request.method == 'GET':
-        return render(request, "drive/index.html")
+        return render(request, "drive/index.html", diccionario)
     if request.method == "POST": #checking if the request method is a POST
         
         if 'login' in request.POST: #Log In
@@ -40,7 +45,7 @@ def index(request): # the index view
                 messages.error(request, 'No hubo match para los datos ingresados.')
                 return HttpResponseRedirect('/')
 
-        else: #Register
+        elif 'register' in request.POST: #Register
             nombre = request.POST['Nombre']
             apellido =  request.POST['Apellido']
             contraseña = request.POST['contraseña']
@@ -55,8 +60,44 @@ def index(request): # the index view
                 messages.success(request, 'Se creó el usuario para ' + user.apodo + '! (carpeta '+new_carpeta_raiz.nombre+' creada)')
             else:
                 messages.error(request, 'Ya existe un usuario con ese email. Intenta iniciando sesión con tu email y contraseña.')
-                return HttpResponseRedirect('/')
+                # return HttpResponseRedirect('/')
             return HttpResponseRedirect('/')
+
+        # Search User
+        elif 'search-users' in request.POST :
+            busqueda = request.POST['buscar']
+            busqueda_words = busqueda.split(' ')
+            usuarios_matcheados = []
+            for word in busqueda_words:
+                by_fname = User.objects.filter(first_name = word)
+                by_lname = User.objects.filter(last_name = word)
+                for user in by_fname:
+                    if user not in usuarios_matcheados:
+                        usuarios_matcheados.append(user)
+                for user in by_lname:
+                    if user not in usuarios_matcheados:
+                        usuarios_matcheados.append(user)
+
+            diccionario['usuarios'] = usuarios_matcheados
+            diccionario['busqueda'] = True
+            diccionario['search'] = busqueda
+            diccionario['search_users'] = True
+
+            return render(request, "drive/index.html", diccionario)
+            #User.objects.filter(first_name=busqueda)
+        
+        elif 'search-files' in request.POST :
+            busqueda = request.POST['buscar']
+            busqueda_words = busqueda.split(' ')
+            diccionario['search_files'] = True
+
+            return render(request, "drive/index.html", diccionario)
+
+        elif 'search-tags' in request.POST :
+            busqueda = request.POST['buscar']
+            busqueda_words = busqueda.split(' ')
+            diccionario['search_tags'] = True
+            return render(request, "drive/index.html", diccionario)
         
 # Called with /logout, only available if the user is authenticated
 # Logouts the authenticated user and shows the screen as if is not registered
