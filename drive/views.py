@@ -324,7 +324,7 @@ def searchUsers(diccionario, busqueda):
     usuarios = User.objects.all()
     for usuario in usuarios:
         for word in busqueda_words:
-            if ((usuario.first_name.lower() == word.lower()) or (usuario.last_name.lower() == word.lower())) and (usuario not in usuarios_matcheados):
+            if ((word.lower() in usuario.first_name.lower()) or (word.lower() in usuario.last_name.lower())) and (usuario not in usuarios_matcheados):
                 usuarios_matcheados.append(usuario)
 
     diccionario['usuarios'] = usuarios_matcheados

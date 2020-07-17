@@ -173,7 +173,6 @@
                                 </div>
                                 {%endif%}
                             {%endfor%}
-                            
                             {% for file in files %}
                             <div ondblclick="window.open('{{file.archivo.url}}','_newtab');" class="file-box">
                                 <div class="file">
@@ -198,10 +197,13 @@
                                     </div>
                                     <div class="file-name">
                                         <a >
-                                        {{ file.nombre }}.{{ file.formato }}
-                                        {% for tag in file.tags.names %}
-                                            <a class="mr-1 badge badge-info">{{ tag }}</a>
-                                        {%endfor%}
+                                        {{ file.nombre }}.{{ file.formato }}</br>
+                                        <a style="color:#666666" href="" data-toggle="collapse" data-target="#{{ file.nombre }}{{ file.formato }}">Mostrar etiquetas...</a>
+                                        <div id="{{ file.nombre }}{{ file.formato }}" class="collapse">
+                                            {% for tag in file.tags.names %}
+                                                <a class="mr-1 badge badge-info">{{ tag }}</a>
+                                            {%endfor%}
+                                        </div>
                                         </a>
                                         <br>
                                         <small>Added: {{ file.fecha_upload }}</small>
