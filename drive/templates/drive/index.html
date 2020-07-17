@@ -32,31 +32,71 @@
                                 <input class="form-control searchbar" type="text" size="50" name="buscar" placeholder="Búsqueda" aria-label="Search" value="{{search}}">
                             </div>
                             <div class="input-group-append" style="margin-right: auto; margin-left: 0;">
-                                <button class="btn btn-outline-primary my-2 my-sm-0 searchbutton" type="submit" name="search-users"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-outline-primary my-2 my-sm-0 searchbutton" type="submit" name="search-all"><i class="fa fa-search"></i></button>
                             </div>
                         </div>
                         {% if busqueda%}
                         <div style="margin-top:20px">
-                            <ul class="nav nav-pills justify-content-center">
+                            <ul class="nav nav-pills nav-justified">
+                                <li class="nav-item">
+                                    {% if search_all %}
+                                        <a class="nav-link active">
+                                            <button class="btn btn-outline-primary tab-search-sel" type="submit" name="search-all">
+                                                Todo
+                                            </button>
+                                        </a>
+                                    {% else %}
+                                        <a class="nav-link">
+                                            <button class="btn btn-outline-secondary tab-search" type="submit" name="search-all">
+                                                Todo
+                                            </button>
+                                        </a>
+                                    {% endif %}
+                                </li>
                                 <li class="nav-item">
                                     {% if search_files %}
-                                        <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-files">Archivos</button>
+                                        <a class="nav-link active">
+                                            <button class="btn btn-outline-primary tab-search-sel" type="submit" name="search-files">
+                                                Archivos
+                                            </button>
+                                        </a>
                                     {% else %}
-                                        <button class="nav-link" type="submit" name="search-files">Archivos</button>
+                                        <a class="nav-link">
+                                            <button class="btn btn-outline-secondary tab-search" type="submit" name="search-files">
+                                                Archivos
+                                            </button>
+                                        </a>
                                     {% endif %}
                                 </li>
                                 <li class="nav-item">
                                     {% if search_users %}
-                                        <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-users"><b>Usuarios</b></button>
+                                        <a class="nav-link active">
+                                            <button class="btn btn-outline-primary tab-search-sel"  type="submit" name="search-users">
+                                                Usuarios
+                                            </button>
+                                        </a>
                                     {% else %}
-                                        <button class="nav-link" type="submit" name="search-users">Usuarios</button>
+                                        <a class="nav-link">
+                                            <button class="btn btn-outline-secondary tab-search" type="submit" name="search-users">
+                                                Usuarios
+                                            </button>
+                                        </a>
                                     {% endif %}
                                 </li>
                                 <li class="nav-item">
                                     {% if search_tags %}
-                                        <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-tags">Etiquetas</button>
+                                        <a class="nav-link active">
+                                            <button class="btn btn-outline-primary tab-search-sel" type="submit" name="search-tags">
+                                                Etiquetas
+                                            </button>
+                                        </a>
                                     {% else %}
-                                        <button class="nav-link" type="submit" name="search-tags">Etiquetas</button>
+                                        <a class="nav-link">
+                                            <button class="btn btn-outline-secondary tab-search" type="submit" name="search-tags">
+                                                Etiquetas
+                                            </button>
+                                        </a>
+                                        
                                     {% endif %}
                                 </li>
                             </ul>
@@ -82,6 +122,35 @@
                                 </div>
                             </div>
                         </div>
+                        {%endfor%}
+                        {%for file in tags%}
+                            <div ondblclick="window.open('{{file.archivo.url}}','_newtab');" class="search-container">
+                                <div class="search-box file"> 
+                                    <div class="icon contenedor">
+                                        {%if file.formato in formatos_img%}
+                                            <img class="imageicon" src="{{ file.archivo.url }}" style="height:100px">
+                                        {%elif file.formato in formatos_vid%}
+                                            <i class="img-responsive fa fa-film"></i>
+                                        {%elif file.formato in formatos_msc%}
+                                            <i class="fa fa-music"></i>
+                                        {%elif file.formato in formatos_doc%}
+                                            <i class="fa fa-file"></i>
+                                        {%elif file.formato in formatos_xcl%}
+                                            <i class="fa fa-bar-chart-o"></i>
+                                        {%else%}
+                                            <i class="fa fa-file"></i>
+                                        {%endif%}
+                                    </div>
+                                    <div class="file-name">
+                                        <a style="font-size: 1.3rem;">
+                                        {{ file.nombre }}.{{ file.formato }}
+                                        {% for tag in file.tags.names %}
+                                            <a class="mr-1 badge badge-info">{{ tag }}</a>
+                                        {%endfor%}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         {%endfor%}
                         <!-- Fin Busqueda -->
                     {% else %}
