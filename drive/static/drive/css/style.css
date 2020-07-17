@@ -276,3 +276,13 @@ text-decoration:none;
 .element-search{
   color:#A96CEB;
 }
+
+.header-search {
+  align-content: center;
+  text-align: center;
+}
+
+.centered-div {
+  align-content: center;
+  text-align: center;
+}

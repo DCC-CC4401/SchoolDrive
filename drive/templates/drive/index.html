@@ -13,46 +13,58 @@
             {% endif %}
             <div class="row"> <!-- Rows y cols tienen su documentación en grid-->
                 <div class="col">     
-                    {% if busqueda%}
-                        <!-- Inicio Busqueda -->
-                        {% load static %}
-                        <form class="form-inline" method="POST" style="display: block;">
-                            {% csrf_token %}
-                            <div class="input-group is-invalid" >
-                                <div class="form-inline" style="margin-right: 0; margin-left: auto;">
-                                    <input class="form-control searchbar" type="text" size="50" name="buscar" placeholder="Archivo, usuario, ..." aria-label="Search" value="{{search}}">
-                                </div>
-                                <div class="input-group-append" style="margin-right: auto; margin-left: 0;">
-                                    <button class="btn btn-outline-primary my-2 my-sm-0 searchbutton" type="submit" name="search-user"><i class="fa fa-search"></i></button>
-                                </div>
+                    <!-- Inicio No-Busqueda -->
+                    <div class="header-search">
+                        <h1 class="display-4">
+                            {% if user.is_authenticated %}
+                                Hola, {{ user.apodo }}!
+                            {% else %}
+                                School Drive
+                            {% endif %}
+                        </h1>
+                        <p class="lead">Ingresa tu búsqueda:</p>
+                    </div>
+                    
+                    <form class="form-inline" method="POST" style="display: block;">
+                        {% csrf_token %}
+                        <div class="input-group" >
+                            <div class="form-inline" style="margin-right: 0; margin-left: auto;">
+                                <input class="form-control searchbar" type="text" size="50" name="buscar" placeholder="Búsqueda" aria-label="Search" value="{{search}}">
                             </div>
-                            <div style="margin-top:20px">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        {% if search_files %}
-                                            <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-files">Archivos</button>
-                                        {% else %}
-                                            <button class="nav-link" type="submit" name="search-files">Archivos</button>
-                                        {% endif %}
-                                    </li>
-                                    <li class="nav-item">
-                                        {% if search_users %}
-                                            <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-users"><b>Usuarios</b></button>
-                                        {% else %}
-                                            <button class="nav-link" type="submit" name="search-users">Usuarios</button>
-                                        {% endif %}
-                                    </li>
-                                    <li class="nav-item">
-                                        {% if search_tags %}
-                                            <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-tags">Etiquetas</button>
-                                        {% else %}
-                                            <button class="nav-link" type="submit" name="search-tags">Etiquetas</button>
-                                        {% endif %}
-                                    </li>
-                                </ul>
+                            <div class="input-group-append" style="margin-right: auto; margin-left: 0;">
+                                <button class="btn btn-outline-primary my-2 my-sm-0 searchbutton" type="submit" name="search-users"><i class="fa fa-search"></i></button>
                             </div>
-                        </form>
+                        </div>
+                        {% if busqueda%}
+                        <div style="margin-top:20px">
+                            <ul class="nav nav-pills justify-content-center">
+                                <li class="nav-item">
+                                    {% if search_files %}
+                                        <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-files">Archivos</button>
+                                    {% else %}
+                                        <button class="nav-link" type="submit" name="search-files">Archivos</button>
+                                    {% endif %}
+                                </li>
+                                <li class="nav-item">
+                                    {% if search_users %}
+                                        <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-users"><b>Usuarios</b></button>
+                                    {% else %}
+                                        <button class="nav-link" type="submit" name="search-users">Usuarios</button>
+                                    {% endif %}
+                                </li>
+                                <li class="nav-item">
+                                    {% if search_tags %}
+                                        <button class="nav-link active" style="color:#A96CEB;" type="submit" name="search-tags">Etiquetas</button>
+                                    {% else %}
+                                        <button class="nav-link" type="submit" name="search-tags">Etiquetas</button>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </form>
 
+                    {% if busqueda%}
                         {%for usuario in usuarios %}
                         <div class="search-container">
                             <div class="search-box">
@@ -60,6 +72,7 @@
                                 {% if usuario.avatar %}
                                     <img src="{{ usuario.avatar.url }}" class="profilepicSearch">
                                 {% else %}
+                                    {% load static %}
                                     <img src="{% static 'drive/img/doggo.jpg' %}" class="profilepicSearch">
                                 {% endif %}
                                 </div>
@@ -72,32 +85,17 @@
                         {%endfor%}
                         <!-- Fin Busqueda -->
                     {% else %}
-                        <!-- Inicio No-Busqueda -->
-                        <h1 class="display-4">
-                            {% if user.is_authenticated %}
-                                Hola, {{ user.apodo }}!
-                            {% else %}
-                                School Drive
-                            {% endif %}
-                        </h1>
-                        <p class="lead">Aquí podrás subir todo tu material de estudios y compartirlo con tus compañer@s</p>
                         <hr class="my-4">
-                        {% if user.is_authenticated %}
-                                Realiza tu búsqueda aquí:
-                            {% else %}
-                                <p> Para empezar, debes registrarte en el formulario a la derecha. <br>
-                                    También puedes realizar tu búsqueda sin estar registrado (proximamente)</p>
-                        {% endif %}
-                        <form class="form-inline" method="POST">
-                            {% csrf_token %}
-                            <input class="form-control" type="text" name="buscar" placeholder="Archivo, usuario, ..." aria-label="Search">
-                            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="search-users">Buscar</button>
-                        </form>
+                        
+                        <div class="centered-div">
+                            <p class="lead">Aquí podrás subir todo tu material de estudios y compartirlo con tus compañer@s
+                            {% if not user.is_authenticated %}
+                                Para empezar, debes registrarte en el formulario a la derecha.
+                            {% endif %}
+                            </p>
+                        </div>
                         <!-- Fin No-Búsqueda -->
-                    {% endif %}
-                        
-                        
-                    
+                    {% endif %}    
                 </div>
 
                 {% if not user.is_authenticated %}
