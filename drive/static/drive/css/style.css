@@ -213,6 +213,8 @@ text-decoration:none;
 
 .imageicon {
   object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
   width: 120%;
   height: 120%;
   margin-top: -15px;
@@ -252,9 +254,10 @@ text-decoration:none;
 .search-box {
   float: left;
   width: 200px;
-  height: 200px;
+  height: 160px;
   align-content: center;
   text-align: center;
+  border-radius: 20px;
 }
 
 .searchbar {
@@ -275,4 +278,50 @@ text-decoration:none;
 
 .element-search{
   color:#A96CEB;
+}
+
+.header-search {
+  align-content: center;
+  text-align: center;
+}
+
+.centered-div {
+  align-content: center;
+  text-align: center;
+}
+
+.tab-search-sel {
+  cursor: pointer;
+  color: white;
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-top: -8px;
+  margin-bottom: -8px;
+}
+
+.tab-search {
+  cursor: pointer;
+  color: gray;
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-top: -8px;
+  margin-bottom: -8px;
 }

@@ -17,19 +17,18 @@ AVATAR_ROOT = os.path.join(BASE_DIR, 'media')
 FILES_ROOT  = os.path.join(BASE_DIR, 'media/archivos')
 # El Index lo documente por ahora para el todolist, pero de ahi lo cambiamos, no lo quiero borrar porque a futuro
 # puede ser util tenerlo.
+formatos_img = ['jpg','png','jepg','gif']
+formatos_vid = ['mp4','avi','mepg']
+formatos_msc = ['mp3','wma']
+formatos_doc = ['txt','doc','docx','ots']
+formatos_xcl = ['xlsx','xls','csv','tsv']
 
 # Shows the index of the project. It shows different information depending if the
 # user is authenticated or not.
 # The user can enter information and then send a POST request to add a task to the list
 def index(request): # the index view
-    diccionario = {}
-    diccionario['busqueda'] = False
-    diccionario['search_users'] = False
-    diccionario['search_files'] = False
-    diccionario['search_tags'] = False
-
     if request.method == 'GET':
-        return render(request, "drive/index.html", diccionario)
+        return render(request, "drive/index.html")
     if request.method == "POST": #checking if the request method is a POST
         
         if 'login' in request.POST: #Log In
@@ -64,40 +63,9 @@ def index(request): # the index view
             return HttpResponseRedirect('/')
 
         # Search User
-        elif 'search-users' in request.POST :
-            busqueda = request.POST['buscar']
-            busqueda_words = busqueda.split(' ')
-            usuarios_matcheados = []
-            for word in busqueda_words:
-                by_fname = User.objects.filter(first_name = word)
-                by_lname = User.objects.filter(last_name = word)
-                for user in by_fname:
-                    if user not in usuarios_matcheados:
-                        usuarios_matcheados.append(user)
-                for user in by_lname:
-                    if user not in usuarios_matcheados:
-                        usuarios_matcheados.append(user)
-
-            diccionario['usuarios'] = usuarios_matcheados
-            diccionario['busqueda'] = True
-            diccionario['search'] = busqueda
-            diccionario['search_users'] = True
-
-            return render(request, "drive/index.html", diccionario)
-            #User.objects.filter(first_name=busqueda)
-        
-        elif 'search-files' in request.POST :
-            busqueda = request.POST['buscar']
-            busqueda_words = busqueda.split(' ')
-            diccionario['search_files'] = True
-
-            return render(request, "drive/index.html", diccionario)
-
-        elif 'search-tags' in request.POST :
-            busqueda = request.POST['buscar']
-            busqueda_words = busqueda.split(' ')
-            diccionario['search_tags'] = True
-            return render(request, "drive/index.html", diccionario)
+        else :
+            dicc = searchFun(request)
+            return render(request, "drive/index.html", dicc)
         
 # Called with /logout, only available if the user is authenticated
 # Logouts the authenticated user and shows the screen as if is not registered
@@ -161,11 +129,7 @@ def view_files(request, folderid):
     html_carpetaraiz = '<li id="'+request.user.carpeta_raiz+'" data-icon-cls="fa fa-folder active"><a href='+request.user.carpeta_raiz+'>'+"Root"+'</a><ul>'+tree_folder+'</ul></li>'
     files = Archivo.objects.filter(usuario=request.user, carpeta=current_folder)
     folders = Carpeta.objects.filter(usuario=request.user)
-    formatos_img = ['jpg','png','jepg','gif']
-    formatos_vid = ['mp4','avi','mepg']
-    formatos_msc = ['mp3','wma']
-    formatos_doc = ['txt','doc','docx','ots']
-    formatos_xcl = ['xlsx','xls','csv','tsv']
+    
 
     rutaList = [ele for ele in reversed(getRuta(current_folder,[]))] 
 
@@ -317,21 +281,67 @@ def upload_file(request):
     pass
     #Dejo aqui abierto por si queremos hacer un post que cambie los atributos
 
-#Called inside /files, it is used to create a subfolder in the selected directory,
-#@login_required
-#def create_folder(request):
-#
-#    if request.method == 'GET':
-#        return render(request, "drive/datafiles.html")
-#
-#    if request.method == 'POST':
-#       usuario = request.user
- #       nombre_carpeta = request.POST['NombreCarpeta']
-#        carpeta_padre = Carpeta.objects.filter(usuario=request.user) #Descomentar si no funciona bien la carpeta_padre de abajo, son experimentos.
-#        carpeta_padre = request.POST['Carpeta'] #Esto si la hacemos con carpeta actual
- #       carpeta = Carpeta(nombre = nombre_carpeta, usuario = usuario, padre = carpeta_padre)
-#        carpeta.save()
-#       return HttpResponseRedirect('/')
- #       messages.success(request, 'Carpeta creada!')
-#
- #   pass
+
+def searchFun(request):
+    diccionario = {}
+    diccionario['busqueda'] = False
+    diccionario['search_users'] = False
+    diccionario['search_files'] = False
+    diccionario['search_tags'] = False
+    diccionario['formatos_img'] = formatos_img
+    diccionario['formatos_vid'] = formatos_vid 
+    diccionario['formatos_msc'] = formatos_msc 
+    diccionario['formatos_doc'] = formatos_doc
+    diccionario['formatos_xcl'] = formatos_xcl 
+    busqueda = request.POST['buscar']
+    diccionario['search'] = busqueda
+    if 'search-users' in request.POST :
+        return searchUsers(diccionario,busqueda)
+    elif 'search-files' in request.POST :
+        return searchFiles(diccionario,busqueda)
+    elif 'search-tags' in request.POST :
+        return searchTags(diccionario,busqueda)
+    else:
+        dic = searchUsers(searchTags(searchFiles(diccionario,busqueda),busqueda),busqueda)
+        dic['search_files'] = False
+        dic['search_users'] = False
+        dic['search_tags'] = False
+        dic['search_all'] = True
+        return dic
+    
+
+def searchFiles(diccionario, busqueda):
+    diccionario['search_files'] = True
+    diccionario['busqueda'] = True
+    #diccionario['files'] = ...
+    return diccionario
+
+
+def searchUsers(diccionario, busqueda):
+    busqueda_words = busqueda.split(' ')
+    usuarios_matcheados = []
+
+    usuarios = User.objects.all()
+    for usuario in usuarios:
+        for word in busqueda_words:
+            if ((usuario.first_name.lower() == word.lower()) or (usuario.last_name.lower() == word.lower())) and (usuario not in usuarios_matcheados):
+                usuarios_matcheados.append(usuario)
+
+    diccionario['usuarios'] = usuarios_matcheados
+    diccionario['busqueda'] = True
+    diccionario['search_users'] = True
+
+    return diccionario
+
+def searchTags(diccionario, busqueda):
+    busqueda_words = busqueda.lower().split(' ')
+    diccionario['busqueda'] = True
+    diccionario['search_tags'] = True
+    lookups = Q()
+    if(len(busqueda_words) >= 1):
+        for word in busqueda_words:
+            lookups = lookups | Q(tags__name__icontains = word)
+
+    results = Archivo.objects.filter(lookups) #.distinct() #Si queremos que discrmine mayuscula y minuscula
+    diccionario['tags'] = results
+    return diccionario

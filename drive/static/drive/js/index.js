@@ -12,6 +12,10 @@ const apodousuario = document.getElementById("apodo");
 const apodospanError = document.getElementById("apodoError");
 const mailusuario = document.getElementById("mail");
 const mailspanError = document.getElementById("mailError");
+const searchFiles = document.getElementById("search-files");
+const searchUsers = document.getElementById("search-users");
+const searchTags = document.getElementById("search-tags");
+const searchForm = document.getElementById("searchf");
 var usuarioregex = /([a-zA-Z ]){3,30}/;
 var apodoregex = /([a-zA-Z0-9]){3,15}/;
 
@@ -134,6 +138,7 @@ form.addEventListener('submit', function (event){
 	}
 });
 
-
-
-
+function send_form(){
+    $('#selected_search').val($(this).attr('data-value'));
+    $('#search_form').submit();
+}
