@@ -106,7 +106,7 @@
 
                     {% if busqueda%}
                         {%for usuario in usuarios %}
-                        <div class="search-container">
+                        <div style="cursor:pointer;" ondblclick="window.open('user/{{usuario.email}}/{{usuario.carpeta_raiz}}','_newtab');" class="search-container">
                             <div class="search-box">
                                 <div class="img-profile-search">
                                 {% if usuario.avatar %}

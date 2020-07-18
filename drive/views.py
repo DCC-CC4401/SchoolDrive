@@ -345,3 +345,54 @@ def searchTags(diccionario, busqueda):
     results = Archivo.objects.filter(lookups) #.distinct() #Si queremos que discrmine mayuscula y minuscula
     diccionario['tags'] = results
     return diccionario
+
+
+def view_files_public(request, folderid, email):
+    user = User.objects.filter(email = email)[0]
+    current_folder = Carpeta.objects.filter(id=folderid,usuario=user)[0]
+    tree_folder = tree_Folders(Carpeta.objects.filter(id=user.carpeta_raiz,usuario=user)[0])
+    html_carpetaraiz = '<li id="'+user.carpeta_raiz+'" data-icon-cls="fa fa-folder active"><a href='+user.carpeta_raiz+'>'+"Root"+'</a><ul>'+tree_folder+'</ul></li>'
+    files = Archivo.objects.filter(usuario=user, carpeta=current_folder)
+    folders = Carpeta.objects.filter(usuario=user)
+    
+
+    rutaList = [ele for ele in reversed(getRuta(current_folder,[]))] 
+
+    diccionario = {"files": files, "folders":folders, "formatos_img":formatos_img, 
+    "formatos_vid": formatos_vid, "formatos_msc":formatos_msc, "tree_folder":html_carpetaraiz, 
+    "current_folder":current_folder, "ruta_list":rutaList, "user_public": user}
+
+    if request.method == 'GET':
+        return render(request, "drive/datafilesPublic.html", diccionario)
+
+    if request.method == "POST": #checking if the request method is a POST
+        #https://stackoverflow.com/questions/42603188/django-taggit-searching-for-posts-when-all-tags-and-title-are-contained-in-the-d
+        if "searchInProfile" in request.POST:
+            #tagsToSearch = request.POST['tags']
+            #usuario = request.user
+            queryInput = request.GET.get('q', None) #Si no funciona tratar con request.POST('tagList')
+            searchQuery = queryInput.lower().split()
+
+            lookups = Q()
+            if(len(searchQuery) >= 1):
+                for word in searchQuery:
+                    lookups = lookups | Q(tags__name__icontains = word)
+
+            results = Archivo.objects.filter(lookups) #.distinct() #Si queremos que discrmine mayuscula y minuscula
+
+            #En results deberia estar lo que nos interesa, no se como mostrarla sin renderizar una pagina nueva
+
+            messages.success(request, 'Busqueda finalizada')
+            return HttpResponseRedirect('/files/' + str(current_folder.id))
+        elif 'login' in request.POST: #Log In
+            mail = request.POST['mail']
+            contraseña = request.POST['contraseña']
+            #print('mail:' +mail+'pass: '+contraseña)
+            usuario = authenticate(request,username=mail,password=contraseña)
+            if usuario is not None:
+                login(request, usuario)
+                messages.success(request, 'Te damos la bienvenida ' + usuario.apodo + '!')
+                return HttpResponseRedirect('/')
+            else:
+                messages.error(request, 'No hubo match para los datos ingresados.')
+                return HttpResponseRedirect('/')
