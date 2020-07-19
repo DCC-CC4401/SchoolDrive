@@ -311,9 +311,22 @@ def searchFun(request):
     
 
 def searchFiles(diccionario, busqueda):
+    busqueda_words = busqueda.split(' ')
+    archivos_matcheados = []
+    archivos = Archivo.objects.all()
+    print("uwu")
+
+    for archivo in archivos:
+        for word in busqueda_words:
+            nombre_archivo = archivo.nombre
+            palabras_nombre = nombre_archivo.split(' ')
+            for palabra in palabras_nombre:
+                if (word.lower() in palabra.lower()) and (archivo not in archivos_matcheados):
+                    archivos_matcheados.append(archivo)
+
     diccionario['search_files'] = True
     diccionario['busqueda'] = True
-    #diccionario['files'] = ...
+    diccionario['files'] = archivos_matcheados
     return diccionario
 
 
