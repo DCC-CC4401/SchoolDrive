@@ -16,7 +16,13 @@
         <div class="row">
             
             <div class="col-md-3">
-                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                {% if user_public.avatar %}
+                    <img src="{{ user_public.avatar.url }}" class="profilepicSearch">
+                {% else %}
+                    {% load static %}
+                    <img src="{% static 'drive/img/doggo.jpg' %}" class="profilepicSearch">
+                {% endif %}
+                <h3>Archivos de <br/>{{ user_public.first_name }} {{ user_public.last_name }}</h3>
                 <hr>
                 {%for folder in ruta_list%}
                     <a href="{{folder.id}}"><i class="fa fa-folder-open-o"></i> {{folder.nombre}}&nbsp;</a>>&nbsp;
@@ -52,100 +58,10 @@
                 </div>
             </div>
 
-            <div class="col-md-9 animated fadeInRight">
-                
-                <div style="width: 70%;">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#subirArchivo">
-                        <i class="fa fa-cloud-upload"></i> Subir Archivo
-                    </button>
-                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#crearCarpeta">
-                        <i class="fa fa-folder-o"></i> Crear Carpeta
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="crearCarpeta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <form id="nueva-carpeta" method="POST">
-                            {% csrf_token %}
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Crear Carpeta</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <input type="text" class="form-control" id="newFolder" name="newFolder" placeholder="Nombre Carpeta" style="width: 100%;">
-                                        <input id="newOriginFolder" name="newOriginFolder" type="hidden" value="{{current_folder.nombre}}">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> -->
-                                        <button type="submit" class="btn btn-primary mb-2" style="width:25%" name="nueva-carpeta">Crear</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <div class="modal fade" id="subirArchivo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <form id="archivo-nuevo" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Subir Archivo</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="nombreArchivo" style="font-size: 14px;">Nombre Archivo:</label>
-                                            <input type="text" class="form-control" name="nombre" id="nombreArchivo" placeholder="Nombre">
-                                            <span id="nombrearchivospanError" style="display: none;" >El nombre no puede contener ? * . " / \ [ ] ; | = ,</span>
-                                        </div>
-                                        <div class="custom-file" lang="es">
-                                            <input style="width:100%" type="file" class="custom-file-input" name="archivo" id="archivo">
-                                            <label class="custom-file-label" for="archivo">Elegir Archivo</label>
-                                            <span id="archivospanError" style="display: none;" >Debes seleccionar un archivo</span>
-                                        </div>
-                                        <div style="margin-top: 10px;">
-                                            <label for="tagsNewFile">Etiquetas Archivo:</label>
-                                            <div class="form-control tags" id="tagsNewFile">
-                                                <input type="text" class="labelinput">
-                                                <input type="hidden" value="" name="tagsNewFileVal" id="tagsNewFileVal">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="carpetaArchivo" style="font-size: 14px;">Carpeta:</label>
-                                            <select class="form-control" name="folder" id="carpetaArchivo" style="width:100%" required>
-                                                {%for folder in folders%}
-                                                    {%if folder.id|stringformat:"s" == current_folder.id|stringformat:"s"%}
-                                                        <option selected>{{folder.nombre}}</option>
-                                                    {%else%}
-                                                        <option>{{folder.nombre}}</option>
-                                                    {%endif%}
-                                                {%endfor%}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary mb-2" style="width:25%" name="archivo-nuevo">Subir</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>    
+            <div class="col-md-9 animated fadeInRight">   
                         
-                <form id="eliminar" method="post" enctype="multipart/form-data">
+                
                     {% csrf_token %}   
-                    <div style="margin-top: -38px;margin-left: 80%;">
-                        <button type="submit" name="deleteFiles" class="btn btn-outline-danger">
-                            <i class="fa fa-trash"></i> Eliminar Selección
-                        </button>    
-                    </div>
                     
                     <div class="row" style="margin-top: 40px;">
                         <div class="col-lg-12">
@@ -217,7 +133,6 @@
                             {%endif%}
                         </div>
                     </div>
-                </form>
             </div>
         </div>
     </div> 

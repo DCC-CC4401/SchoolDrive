@@ -8,4 +8,5 @@ urlpatterns = [
     path('logout',views.logout_user, name='logout'),
     path('profile', views.view_profile, name='profile'),
     path('files/<slug:folderid>', views.view_files, name='files'),
+    path('user/<email>/<slug:folderid>', views.view_files_public, name='user'),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #agregamos esta última línea
