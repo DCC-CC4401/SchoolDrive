@@ -106,7 +106,7 @@
 
                     {% if busqueda%}
                         {%for usuario in usuarios %}
-                        <div style="cursor:pointer;" ondblclick="window.open('user/{{usuario.email}}/{{usuario.carpeta_raiz}}','_newtab');" class="search-container">
+                        <div style="cursor:pointer;" ondblclick="window.open('user/{{usuario.email}}/{{usuario.carpeta_raiz}}','_blank');" class="search-container file-box">
                             <div class="search-box">
                                 <div class="img-profile-search">
                                 {% if usuario.avatar %}
@@ -124,8 +124,9 @@
                         </div>
                         {%endfor%}
                         {%for file in tags%}
-                            <div ondblclick="window.open('{{file.archivo.url}}','_newtab');" class="search-container">
-                                <div class="search-box file"> 
+                            <div style="cursor:pointer;" ondblclick="window.open('{{file.archivo.url}}','_blank');" class="search-container file-box">
+                                <div class="file"> 
+                                    <span class="corner"></span> 
                                     <div class="icon contenedor">
                                         {%if file.formato in formatos_img%}
                                             <img class="imageicon" src="{{ file.archivo.url }}" style="height:100px">
@@ -141,20 +142,23 @@
                                             <i class="fa fa-file"></i>
                                         {%endif%}
                                     </div>
-                                    <div class="file-name">
+                                    <div style="overflow:hidden; white-space:nowrap; text-overflow: ellipsis;" class="file-name">
                                         <a style="font-size: 1.3rem;">
-                                        {{ file.nombre }}.{{ file.formato }}
+                                        {{ file.nombre }}.{{ file.formato }} <br/>
                                         {% for tag in file.tags.names %}
                                             <a class="mr-1 badge badge-info">{{ tag }}</a>
                                         {%endfor%}
+                                        <br/>
+                                        <a style="font-size: 12px;">Subido por: </a><a style="color: gray;" href="user/{{file.usuario.email}}/{{file.usuario.carpeta_raiz}}" >{{file.usuario.first_name}}</a>
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         {%endfor%}
                         {%for file in files%}
-                            <div ondblclick="window.open('{{file.archivo.url}}','_newtab');" class="search-container">
-                                <div class="search-box file"> 
+                            <div style="cursor:pointer;" ondblclick="window.open('{{file.archivo.url}}','_blank');" class="search-container file-box">
+                                <div class="file"> 
+                                    <span class="corner"></span> 
                                     <div class="icon contenedor">
                                         {%if file.formato in formatos_img%}
                                             <img class="imageicon" src="{{ file.archivo.url }}" style="height:100px">
@@ -170,12 +174,14 @@
                                             <i class="fa fa-file"></i>
                                         {%endif%}
                                     </div>
-                                    <div class="file-name">
+                                    <div style="overflow:hidden; white-space:nowrap; text-overflow: ellipsis;" class="file-name">
                                         <a style="font-size: 1.3rem;">
-                                        {{ file.nombre }}.{{ file.formato }}
+                                        {{ file.nombre }}.{{ file.formato }}<br/>
                                         {% for tag in file.tags.names %}
                                             <a class="mr-1 badge badge-info">{{ tag }}</a>
                                         {%endfor%}
+                                        <br/>
+                                        <a style="font-size: 12px;">Subido por: </a><a style="color: gray;" href="user/{{file.usuario.email}}/{{file.usuario.carpeta_raiz}}" >{{file.usuario.first_name}}</a>
                                         </a>
                                     </div>
                                 </div>

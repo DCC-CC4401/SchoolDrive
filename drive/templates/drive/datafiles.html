@@ -195,7 +195,7 @@
                                             <input class="form-check-input" type="checkbox" name="{{file.carpeta.id}}/{{file.nombre}}.{{file.formato}}" id="{{file.nombre}}" style="margin-left:5px;">
                                         </div>
                                     </div>
-                                    <div class="file-name">
+                                    <div style="overflow:hidden; white-space:nowrap; text-overflow: ellipsis;" class="file-name">
                                         <a >
                                         {{ file.nombre }}.{{ file.formato }}</br>
                                         <a style="color:#666666" href="" data-toggle="collapse" data-target="#{{ file.nombre }}{{ file.formato }}">Mostrar etiquetas...</a>
