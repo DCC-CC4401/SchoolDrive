@@ -20,6 +20,7 @@ input.invalid {
 .file-box {
   float: left;
   width: 220px;
+
 }
 .file-manager h5 {
   text-transform: uppercase;
@@ -93,6 +94,7 @@ input.invalid {
   position: relative;
   margin-bottom: 20px;
   margin-right: 20px;
+  
 }
 .file-manager .hr-line-dashed {
   margin: 15px 0;
@@ -122,6 +124,7 @@ input.invalid {
   padding: 10px;
   background-color: #f8f8f8;
   border-top: 1px solid #e7eaec;
+  
 }
 .file-name small {
   color: #676a6c;
@@ -231,6 +234,7 @@ text-decoration:none;
   position: absolute;
   top: 10px;
   left: 10px;
+  
 }
 .profileicon {
   object-fit: cover;
