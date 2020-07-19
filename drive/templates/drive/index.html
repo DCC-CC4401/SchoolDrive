@@ -106,7 +106,7 @@
 
                     {% if busqueda%}
                         {%for usuario in usuarios %}
-                        <div style="cursor:pointer;" ondblclick="window.open('user/{{usuario.email}}/{{usuario.carpeta_raiz}}','_newtab');" class="search-container file-box">
+                        <div style="cursor:pointer;" ondblclick="window.open('user/{{usuario.email}}/{{usuario.carpeta_raiz}}','_blank');" class="search-container file-box">
                             <div class="search-box">
                                 <div class="img-profile-search">
                                 {% if usuario.avatar %}
@@ -156,7 +156,7 @@
                             </div>
                         {%endfor%}
                         {%for file in files%}
-                            <div style="cursor:pointer;" ondblclick="window.open('{{file.archivo.url}}','_newtab');" class="search-container file-box">
+                            <div style="cursor:pointer;" ondblclick="window.open('{{file.archivo.url}}','_blank');" class="search-container file-box">
                                 <div class="file"> 
                                     <span class="corner"></span> 
                                     <div class="icon contenedor">
@@ -182,35 +182,6 @@
                                         {%endfor%}
                                         <br/>
                                         <a style="font-size: 12px;">Subido por: </a><a style="color: gray;" href="user/{{file.usuario.email}}/{{file.usuario.carpeta_raiz}}" >{{file.usuario.first_name}}</a>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        {%endfor%}
-                        {%for file in files%}
-                            <div ondblclick="window.open('{{file.archivo.url}}','_newtab');" class="search-container">
-                                <div class="search-box file"> 
-                                    <div class="icon contenedor">
-                                        {%if file.formato in formatos_img%}
-                                            <img class="imageicon" src="{{ file.archivo.url }}" style="height:100px">
-                                        {%elif file.formato in formatos_vid%}
-                                            <i class="img-responsive fa fa-film"></i>
-                                        {%elif file.formato in formatos_msc%}
-                                            <i class="fa fa-music"></i>
-                                        {%elif file.formato in formatos_doc%}
-                                            <i class="fa fa-file"></i>
-                                        {%elif file.formato in formatos_xcl%}
-                                            <i class="fa fa-bar-chart-o"></i>
-                                        {%else%}
-                                            <i class="fa fa-file"></i>
-                                        {%endif%}
-                                    </div>
-                                    <div class="file-name">
-                                        <a style="font-size: 1.3rem;">
-                                        {{ file.nombre }}.{{ file.formato }}
-                                        {% for tag in file.tags.names %}
-                                            <a class="mr-1 badge badge-info">{{ tag }}</a>
-                                        {%endfor%}
                                         </a>
                                     </div>
                                 </div>
